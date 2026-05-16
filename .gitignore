@@ -1,0 +1,91 @@
+/[Aa]sset/[Mm]eta/
+# =============== #
+# Unity Git Ignore #
+# =============== #
+
+# Các thư mục tạm và tự động sinh ra bởi Unity
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emoryCaptures/
+/[Mm]emoryProfiler/
+/[Ll]ogs/
+/[Vv][Rr]---------/
+
+# Thư mục Asset Store (Chứa các gói tải về, không cần commit)
+/[Aa]ssets/AssetStoreTools*
+
+# Không nên bỏ qua file .meta của các thư mục bị loại trừ nếu chúng chứa asset thực tế, 
+# nhưng Unity tự quản lý chúng rất tốt.
+
+# =============== #
+#   Crashlytics   #
+# =============== #
+sysinfo.txt
+
+# =================== #
+# Các file của các IDE #
+# =================== #
+
+# Visual Studio / VS Code / Rider / MonoDevelop
+# Các file giải pháp (Solution) và project tự sinh (Unity sẽ tự tạo lại nếu thiếu)
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# Thư mục cấu hình riêng của IDE
+.vs/
+.gradle/
+.idea/
+.vscode/
+*.vscode/
+
+# Thư mục sinh ra khi Test
+.vs-kubernetes/
+
+# ==================== #
+#  Hệ điều hành (OS)   #
+# ==================== #
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# ==================== #
+#     Gợi ý thêm       #
+# ==================== #
+# Nếu bạn dùng UPM (Unity Package Manager) dạng local, 
+# hãy cẩn thận đừng ignores thư mục Packages trừ khi muốn.
+# /[Pp]ackages/*
+# Nhưng nên giữ lại manifest.json và packages-lock.json:
+# !/[Pp]ackages/manifest.json
+# !/[Pp]ackages/packages-lock.json
+
+# File log của Unity
+UnityCrashHandler64.exe
+UnityCrashHandler32.exe
