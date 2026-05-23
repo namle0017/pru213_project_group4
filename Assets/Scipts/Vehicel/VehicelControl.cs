@@ -4,12 +4,11 @@ public class VehicelControl : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _frontTireRB;
     [SerializeField] private Rigidbody2D _backTireRB;
+    [SerializeField] private Rigidbody2D _carRb;
     [SerializeField] private float _speed = 150f;
+    [SerializeField] private float _rotationSpeed = 300f;
+    private float _moveInput;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -17,12 +16,11 @@ public class VehicelControl : MonoBehaviour
         _moveInput = Input.GetAxisRaw("Horizontal");
     }
 
-    private float _moveInput;
-
 
     private void FixedUpdate()
     {
         _frontTireRB.AddTorque(-_moveInput * _speed * Time.fixedDeltaTime);
         _backTireRB.AddTorque(-_moveInput * _speed * Time.fixedDeltaTime);
+        _carRb.AddTorque(-_moveInput * _rotationSpeed * Time.fixedDeltaTime);
     }
 }
