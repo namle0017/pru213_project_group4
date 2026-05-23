@@ -1,0 +1,1053 @@
+fileFormatVersion: 2
+guid: 177a89e5071b3df4fbea70e2345093c7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2648297945489299766
+    second: driver_0
+  - first:
+      213: 758079689211335503
+    second: driver_1
+  - first:
+      213: 3025158132174626173
+    second: driver_2
+  - first:
+      213: 3830982513112459230
+    second: driver_3
+  - first:
+      213: -8974838165272268614
+    second: driver_4
+  - first:
+      213: -2482562117514743522
+    second: driver_5
+  - first:
+      213: 292731927297452114
+    second: driver_6
+  - first:
+      213: 724009334401861173
+    second: driver_7
+  - first:
+      213: -4648598189747228143
+    second: driver_8
+  - first:
+      213: 844272692298955007
+    second: driver_9
+  - first:
+      213: -376952388820566339
+    second: driver_10
+  - first:
+      213: 5384523941189898240
+    second: driver_11
+  - first:
+      213: 991847158763107703
+    second: driver_12
+  - first:
+      213: -5235889255317063430
+    second: driver_13
+  - first:
+      213: 4380081381810993956
+    second: driver_14
+  - first:
+      213: -4469814247478405459
+    second: driver_15
+  - first:
+      213: 2874596686372308094
+    second: driver_16
+  - first:
+      213: -1023333564335497530
+    second: driver_17
+  - first:
+      213: -6550237401941889178
+    second: driver_18
+  - first:
+      213: -7664341454112338324
+    second: driver_19
+  - first:
+      213: -128670875980561376
+    second: driver_20
+  - first:
+      213: -3957916172257846891
+    second: driver_21
+  - first:
+      213: 5027064105437381339
+    second: driver_22
+  - first:
+      213: 3154115483555431976
+    second: driver_23
+  - first:
+      213: 2886950874170930133
+    second: driver_24
+  - first:
+      213: -4587663979194859365
+    second: driver_25
+  - first:
+      213: 882458647767564646
+    second: driver_26
+  - first:
+      213: 464909587696059348
+    second: driver_27
+  - first:
+      213: 4104220133511495009
+    second: driver_28
+  - first:
+      213: 8191576641148057577
+    second: driver_29
+  - first:
+      213: 8862436768523484231
+    second: driver_30
+  - first:
+      213: 6486885080187580329
+    second: driver_31
+  - first:
+      213: 3085928898485037006
+    second: driver_32
+  - first:
+      213: 8437004210947109121
+    second: driver_33
+  - first:
+      213: -3266333311318477035
+    second: driver_34
+  - first:
+      213: 7645392740003696631
+    second: driver_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: driver_0
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 719
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 639594c33f4a0c420800000000000000
+      internalID: 2648297945489299766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_1
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 719
+        width: 14
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4351eaf57d358a00800000000000000
+      internalID: 758079689211335503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_2
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 719
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7d17a11b458bf920800000000000000
+      internalID: 3025158132174626173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_3
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 719
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed72dca5c426a2530800000000000000
+      internalID: 3830982513112459230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_4
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 719
+        width: 14
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab0f35a4d38f27380800000000000000
+      internalID: -8974838165272268614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_5
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 719
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1131b448ea2c8dd0800000000000000
+      internalID: -2482562117514743522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_6
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 0
+        width: 12
+        height: 765
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 258eafc032eff0400800000000000000
+      internalID: 292731927297452114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_7
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 720
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 536071757a23c0a00800000000000000
+      internalID: 724009334401861173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_8
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 720
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 112b794639cdc7fb0800000000000000
+      internalID: -4648598189747228143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_9
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 720
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff8ba0e5a8577bb00800000000000000
+      internalID: 844272692298955007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_10
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 720
+        width: 6
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbe7d1faccbc4caf0800000000000000
+      internalID: -376952388820566339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_11
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 720
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 000d53ffefba9ba40800000000000000
+      internalID: 5384523941189898240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_12
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 720
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7753e816cbfb3cd00800000000000000
+      internalID: 991847158763107703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_13
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 720
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af8ba8596726657b0800000000000000
+      internalID: -5235889255317063430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_14
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 564
+        width: 90
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42b75226fcc29cc30800000000000000
+      internalID: 4380081381810993956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_15
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 635
+        width: 79
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da6d11fbf9708f1c0800000000000000
+      internalID: -4469814247478405459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_16
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 535
+        width: 105
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e748cbbb47e94e720800000000000000
+      internalID: 2874596686372308094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_17
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 641
+        width: 109
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ce5c0b8b836cc1f0800000000000000
+      internalID: -1023333564335497530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_18
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 560
+        width: 50
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66fa6ce99c1e815a0800000000000000
+      internalID: -6550237401941889178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_19
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 550
+        width: 50
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6e455e0e0ac2a590800000000000000
+      internalID: -7664341454112338324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_20
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 402
+        width: 63
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0248d30258ed63ef0800000000000000
+      internalID: -128670875980561376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_21
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 417
+        width: 43
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5991cc51638a219c0800000000000000
+      internalID: -3957916172257846891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_22
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 417
+        width: 34
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd246bb5b28b3c540800000000000000
+      internalID: 5027064105437381339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_23
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 392
+        width: 63
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82681e1325ba5cb20800000000000000
+      internalID: 3154115483555431976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_24
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 390
+        width: 53
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d336fa3682801820800000000000000
+      internalID: 2886950874170930133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_25
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 389
+        width: 43
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b904c3bdae75550c0800000000000000
+      internalID: -4587663979194859365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_26
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 304
+        width: 43
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6614825f67f1f3c00800000000000000
+      internalID: 882458647767564646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_27
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 304
+        width: 104
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d30c4b8ec0b37600800000000000000
+      internalID: 464909587696059348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_28
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 274
+        width: 62
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16d75f1677e15f830800000000000000
+      internalID: 4104220133511495009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_29
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 294
+        width: 104
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e77406ed835ea170800000000000000
+      internalID: 8191576641148057577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_30
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 200
+        width: 45
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74cf3382943bdfa70800000000000000
+      internalID: 8862436768523484231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_31
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 219
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9afac578c9b060a50800000000000000
+      internalID: 6486885080187580329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_32
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 144
+        width: 65
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec72054bbfb63da20800000000000000
+      internalID: 3085928898485037006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_33
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 209
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1013af1f0a2461570800000000000000
+      internalID: 8437004210947109121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_34
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 55
+        width: 130
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51736dcb827aba2d0800000000000000
+      internalID: -3266333311318477035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: driver_35
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 45
+        width: 130
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ff4544a034e91a60800000000000000
+      internalID: 7645392740003696631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      driver_0: 2648297945489299766
+      driver_1: 758079689211335503
+      driver_10: -376952388820566339
+      driver_11: 5384523941189898240
+      driver_12: 991847158763107703
+      driver_13: -5235889255317063430
+      driver_14: 4380081381810993956
+      driver_15: -4469814247478405459
+      driver_16: 2874596686372308094
+      driver_17: -1023333564335497530
+      driver_18: -6550237401941889178
+      driver_19: -7664341454112338324
+      driver_2: 3025158132174626173
+      driver_20: -128670875980561376
+      driver_21: -3957916172257846891
+      driver_22: 5027064105437381339
+      driver_23: 3154115483555431976
+      driver_24: 2886950874170930133
+      driver_25: -4587663979194859365
+      driver_26: 882458647767564646
+      driver_27: 464909587696059348
+      driver_28: 4104220133511495009
+      driver_29: 8191576641148057577
+      driver_3: 3830982513112459230
+      driver_30: 8862436768523484231
+      driver_31: 6486885080187580329
+      driver_32: 3085928898485037006
+      driver_33: 8437004210947109121
+      driver_34: -3266333311318477035
+      driver_35: 7645392740003696631
+      driver_4: -8974838165272268614
+      driver_5: -2482562117514743522
+      driver_6: 292731927297452114
+      driver_7: 724009334401861173
+      driver_8: -4648598189747228143
+      driver_9: 844272692298955007
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
