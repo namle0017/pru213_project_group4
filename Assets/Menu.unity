@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 436313400}
   - component: {fileID: 436313402}
   - component: {fileID: 436313401}
+  - component: {fileID: 436313403}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -258,6 +259,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 436313399}
   m_CullTransparentMesh: 1
+--- !u!114 &436313403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436313399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 719316d9970edec44b89f92cf76f2402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlinkText
+  blinkSpeed: 2
+  moveSpeed: 2
+  moveAmount: 10
+  scaleAmount: 0.05
 --- !u!1 &652192080
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,10 +489,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6367fb9b0b64a4eb1f5605717d7081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlinkText
-  textUI: {fileID: 0}
-  speed: 2
-  minAlpha: 0.2
-  maxAlpha: 1
+  blinkSpeed: 2
+  moveSpeed: 2
+  moveAmount: 10
+  scaleAmount: 0.05
 --- !u!1 &679127520
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,8 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130c89e0763d0b549a087e0d5d32dc03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BGMove
-  speed: 2
-  width: 18
+  speed: 0.5
 --- !u!1 &1133624378
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,10 +837,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6367fb9b0b64a4eb1f5605717d7081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlinkText
-  textUI: {fileID: 0}
-  speed: 2
-  minAlpha: 0.2
-  maxAlpha: 1
+  blinkSpeed: 2
+  moveSpeed: 2
+  moveAmount: 10
+  scaleAmount: 0.05
 --- !u!1 &1378764348
 GameObject:
   m_ObjectHideFlags: 0
