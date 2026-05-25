@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 5929105237037863908}
   - component: {fileID: 773500060726475972}
   m_Layer: 0
-  m_Name: PlayerCar
+  m_Name: F1Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
