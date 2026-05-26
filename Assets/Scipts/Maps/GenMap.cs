@@ -23,9 +23,10 @@ public class GenMap : MonoBehaviour
                 _spriteShapeController.spline.SetTangentMode(i, ShapeTangentMode.Continuous);
             _spriteShapeController.spline.SetLeftTangent(i, Vector3.left * _xMultiplier * _curveSmoothness);
             _spriteShapeController.spline.SetRightTangent(i, Vector3.right * _xMultiplier * _curveSmoothness);
-
-            _spriteShapeController.spline.InsertPointAt(_levelLength, new Vector3(_lastPos.x, transform.position.y - _bottom));
-            _spriteShapeController.spline.InsertPointAt(_levelLength + 1, new Vector3(transform.position.x, transform.position.y - _bottom));
         }
+
+        // Thêm 2 điểm đáy sau khi đã tạo xong toàn bộ điểm trên mặt đất
+        _spriteShapeController.spline.InsertPointAt(_levelLength, new Vector3(_lastPos.x, transform.position.y - _bottom));
+        _spriteShapeController.spline.InsertPointAt(_levelLength + 1, new Vector3(transform.position.x, transform.position.y - _bottom));
     }
 }
