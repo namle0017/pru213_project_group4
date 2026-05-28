@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Menu.unity
     guid: 50b4b5413856beb4891d52a0e30aaef9
   - enabled: 1
-    path: Assets/Testing.unity
+    path: Assets/GroundMap.unity
     guid: 160e610bf0693464c9fe447a628606d7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
