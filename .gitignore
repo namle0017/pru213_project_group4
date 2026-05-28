@@ -84,8 +84,8 @@ ehthumbs_vista.db
 # hãy cẩn thận đừng ignores thư mục Packages trừ khi muốn.
 # /[Pp]ackages/*
 # Nhưng nên giữ lại manifest.json và packages-lock.json:
-# !/[Pp]ackages/manifest.json
-# !/[Pp]ackages/packages-lock.json
+!/[Pp]ackages/manifest.json
+!/[Pp]ackages/packages-lock.json
 
 # File log của Unity
 UnityCrashHandler64.exe
