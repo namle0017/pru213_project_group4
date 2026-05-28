@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 244995597}
   - component: {fileID: 244995601}
   m_Layer: 0
-  m_Name: Highway
+  m_Name: GROUND
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -573,7 +573,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 0
       m_CornerMode: 1
-  m_SpriteShape: {fileID: 11400000, guid: 20f40868a67fdef41b1a33c8fe26308d, type: 2}
+  m_SpriteShape: {fileID: 11400000, guid: 8a74040530e862d408626300259b4a8c, type: 2}
   m_FillPixelPerUnit: 256
   m_StretchTiling: 1
   m_SplineDetail: 16
@@ -837,9 +837,9 @@ SpriteShapeRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_ShapeTexture: {fileID: 2800000, guid: b281486fd8fa6c34db46dc4eafb73760, type: 3}
+  m_ShapeTexture: {fileID: 2800000, guid: 89ae42f860f45104fb977c95c2802e55, type: 3}
   m_Sprites:
-  - {fileID: 5755224048366304715, guid: 4fde63f847702c04c96523c72ba07a1f, type: 3}
+  - {fileID: 3657438619248086131, guid: e308a04aa61638d4cb5574dba055d248, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
