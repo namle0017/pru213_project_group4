@@ -574,13 +574,13 @@ MonoBehaviour:
       corner: 0
       m_CornerMode: 1
   m_SpriteShape: {fileID: 11400000, guid: 8a74040530e862d408626300259b4a8c, type: 2}
-  m_FillPixelPerUnit: 278
+  m_FillPixelPerUnit: 78
   m_StretchTiling: 1
   m_SplineDetail: 16
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
-  m_CornerAngleThreshold: 30
+  m_CornerAngleThreshold: 26.3
   m_ColliderDetail: 16
   m_ColliderOffset: 0.296
   m_UpdateCollider: 1
@@ -590,7 +590,7 @@ MonoBehaviour:
   m_UpdateShadow: 0
   m_ShadowDetail: 16
   m_ShadowOffset: 0.5
-  m_BoundsScale: 2
+  m_BoundsScale: 256
   m_UpdateGeometry: 1
   m_Creator: {fileID: 0}
   m_Modifiers: []
