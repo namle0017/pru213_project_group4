@@ -37,7 +37,6 @@ public class VehicelControl : MonoBehaviour
         // Nhấn nút mũi tên trái (hoặc phím A) để đi ngược lại (lùi)
         else if (Keyboard.current.leftArrowKey.isPressed || Keyboard.current.aKey.isPressed)
         {
-
             _moveInput = -1f;
             _isCoasting = false;
         }
