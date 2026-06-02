@@ -5,6 +5,6 @@ public class StartGame : MonoBehaviour
 {
     public void LoadTestingScene()
     {
-        SceneManager.LoadScene("Testing");
+        SceneManager.LoadScene("GroundMap");
     }
 }
