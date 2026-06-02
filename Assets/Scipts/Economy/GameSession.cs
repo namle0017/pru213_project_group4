@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameSession : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class GameSession : MonoBehaviour
     [Header("Fuel")]
     [SerializeField] private float maxFuel = 100f;
     [SerializeField] private float currentFuel = 100f;
-    [SerializeField] private float fuelDrainPerSecond = 5f;
+    [SerializeField] private float idleFuelDrainPerSecond = 0.5f;
+    [SerializeField] private float gasFuelDrainPerSecond = 4f;
 
     [Header("Distance Score")]
     [SerializeField] private float currentDistance = 0f;
@@ -25,6 +27,8 @@ public class GameSession : MonoBehaviour
 
     private float startPlayerX;
     private bool hasStartPosition;
+    private VehicelControl vehicleControl;
+    private Rigidbody2D playerRigidbody;
 
     public Transform Player => player;
     public int CurrentCoins => currentCoins;
@@ -50,6 +54,7 @@ public class GameSession : MonoBehaviour
         highScore = PlayerPrefs.GetFloat(highScoreKey, 0f);
         currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel);
         CacheStartPosition();
+        CachePlayerComponents();
     }
 
     private void Update()
@@ -67,6 +72,11 @@ public class GameSession : MonoBehaviour
         if (!hasStartPosition)
         {
             CacheStartPosition();
+        }
+
+        if (vehicleControl == null || playerRigidbody == null)
+        {
+            CachePlayerComponents();
         }
 
         DrainFuel();
@@ -108,7 +118,9 @@ public class GameSession : MonoBehaviour
 
         currentFuel = 0f;
         isGameOver = true;
+        StopPlayerMovement();
         SaveHighScoreIfNeeded();
+        Debug.Log("Game Over: Het fuel.");
     }
 
     private void CacheStartPosition()
@@ -122,10 +134,55 @@ public class GameSession : MonoBehaviour
         hasStartPosition = true;
     }
 
+    private void CachePlayerComponents()
+    {
+        if (player == null)
+        {
+            return;
+        }
+
+        vehicleControl = player.GetComponent<VehicelControl>();
+        playerRigidbody = player.GetComponent<Rigidbody2D>();
+    }
+
     private void DrainFuel()
     {
-        currentFuel -= fuelDrainPerSecond * Time.deltaTime;
+        float fuelDrainRate = idleFuelDrainPerSecond;
+
+        if (IsGasPressed())
+        {
+            fuelDrainRate = gasFuelDrainPerSecond;
+        }
+
+        currentFuel -= fuelDrainRate * Time.deltaTime;
         currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel);
+    }
+
+    private bool IsGasPressed()
+    {
+        if (Keyboard.current == null)
+        {
+            return false;
+        }
+
+        return Keyboard.current.rightArrowKey.isPressed
+            || Keyboard.current.dKey.isPressed
+            || Keyboard.current.leftArrowKey.isPressed
+            || Keyboard.current.aKey.isPressed;
+    }
+
+    private void StopPlayerMovement()
+    {
+        if (vehicleControl != null)
+        {
+            vehicleControl.enabled = false;
+        }
+
+        if (playerRigidbody != null)
+        {
+            playerRigidbody.linearVelocity = Vector2.zero;
+            playerRigidbody.angularVelocity = 0f;
+        }
     }
 
     private void UpdateDistanceScore()
