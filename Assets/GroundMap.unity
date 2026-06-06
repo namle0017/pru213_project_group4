@@ -1510,7 +1510,8 @@ MonoBehaviour:
   currentCoins: 0
   maxFuel: 100
   currentFuel: 100
-  fuelDrainPerSecond: 5
+  idleFuelDrainPerSecond: 0.5
+  gasFuelDrainPerSecond: 4
   currentDistance: 0
   highScore: 0
   highScoreKey: HighScore_GroundMap
@@ -1548,7 +1549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6292870997115193385, guid: f9db681a4b456490f8451da4e9a98ce7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.93
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 6292870997115193385, guid: f9db681a4b456490f8451da4e9a98ce7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1601,11 +1602,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6292870997115193385, guid: f9db681a4b456490f8451da4e9a98ce7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.61
+      value: 20.7
       objectReference: {fileID: 0}
     - target: {fileID: 6292870997115193385, guid: f9db681a4b456490f8451da4e9a98ce7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.74
+      value: -0.97
       objectReference: {fileID: 0}
     - target: {fileID: 6292870997115193385, guid: f9db681a4b456490f8451da4e9a98ce7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1658,11 +1659,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3885616484406812906, guid: 8ada5ac0bcd52442ba755396a4f786d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.64
+      value: 14.7
       objectReference: {fileID: 0}
     - target: {fileID: 3885616484406812906, guid: 8ada5ac0bcd52442ba755396a4f786d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.37
+      value: -0.63
       objectReference: {fileID: 0}
     - target: {fileID: 3885616484406812906, guid: 8ada5ac0bcd52442ba755396a4f786d1, type: 3}
       propertyPath: m_LocalPosition.z
