@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameSession : MonoBehaviour
@@ -10,6 +10,9 @@ public class GameSession : MonoBehaviour
 
     [Header("Coin")]
     [SerializeField] private int currentCoins = 0;
+    [SerializeField] private int totalCoins = 0;   
+    private string totalCoinsKey = "TotalCoins_Save"; 
+    public int TotalCoins => totalCoins; 
 
     [Header("Fuel")]
     [SerializeField] private float maxFuel = 100f;
@@ -52,6 +55,8 @@ public class GameSession : MonoBehaviour
     private void Start()
     {
         highScore = PlayerPrefs.GetFloat(highScoreKey, 0f);
+        totalCoins = PlayerPrefs.GetInt(totalCoinsKey, 0);
+
         currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel);
         CacheStartPosition();
         CachePlayerComponents();
@@ -120,7 +125,13 @@ public class GameSession : MonoBehaviour
         isGameOver = true;
         StopPlayerMovement();
         SaveHighScoreIfNeeded();
-        Debug.Log("Game Over: Het fuel.");
+
+        // THÊM 3 DÒNG NÀY ĐỂ SAVE TỔNG VÀNG:
+        totalCoins += currentCoins; // Cộng dồn
+        PlayerPrefs.SetInt(totalCoinsKey, totalCoins); // Lưu xuống máy
+        PlayerPrefs.Save(); // Bắt buộc phải có dòng này để xác nhận lưu
+        Debug.Log("Game Over: Het fuel. Tổng vàng hiện có: " + totalCoins);
+
     }
 
     private void CacheStartPosition()

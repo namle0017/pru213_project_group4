@@ -7,6 +7,7 @@ public class HUDController : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameSession gameSession;
     [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private TextMeshProUGUI totalCoinText;
     [SerializeField] private TextMeshProUGUI distanceText;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Slider fuelSlider;
@@ -47,6 +48,10 @@ public class HUDController : MonoBehaviour
         if (coinText != null)
         {
             coinText.text = "Coins: " + gameSession.CurrentCoins;
+        }
+        if (totalCoinText != null)
+        {
+            totalCoinText.text = "Total Coins: " + gameSession.TotalCoins;
         }
 
         if (distanceText != null)
