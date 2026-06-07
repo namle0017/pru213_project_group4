@@ -1614,6 +1614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
   gameSession: {fileID: 0}
   coinText: {fileID: 1633626918}
+  totalCoinText: {fileID: 0}
   distanceText: {fileID: 279592106}
   highScoreText: {fileID: 2097305088}
   fuelSlider: {fileID: 1566790451}
@@ -2238,6 +2239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
   player: {fileID: 657070605}
   currentCoins: 0
+  totalCoins: 0
   maxFuel: 100
   currentFuel: 100
   idleFuelDrainPerSecond: 0.5
@@ -2462,4 +2464,11 @@ SceneRoots:
   - {fileID: 1176880756}
   - {fileID: 340744541}
   - {fileID: 1637671209}
+<<<<<<< HEAD
   - {fileID: 2025787880}
+=======
+  - {fileID: 1273716742}
+  - {fileID: 93753614}
+  - {fileID: 1391782495}
+  - {fileID: 1226303030}
+>>>>>>> feat/update_Save_GameFlow

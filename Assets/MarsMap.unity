@@ -4200,6 +4200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
   gameSession: {fileID: 0}
   coinText: {fileID: 803644685}
+  totalCoinText: {fileID: 0}
   distanceText: {fileID: 1008396644}
   highScoreText: {fileID: 45304673}
   fuelSlider: {fileID: 1475811686}
@@ -4403,6 +4404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
   player: {fileID: 657070605}
   currentCoins: 0
+  totalCoins: 0
   maxFuel: 100
   currentFuel: 100
   idleFuelDrainPerSecond: 0.5
