@@ -2,8 +2,19 @@ using UnityEngine;
 
 public class CoinPickup : MonoBehaviour
 {
-    public int coinValue = 1;
+    [Header("Coin Value Range")]
+    public int minCoinValue = 3;
+    public int maxCoinValue = 5;
+
+    private int coinValue;
     private GameSession gameSession;
+
+    private void Awake()
+    {
+        // Random so coin khi object duoc tao ra (inclusive ca 2 dau)
+        coinValue = Random.Range(minCoinValue, maxCoinValue + 1);
+        Debug.Log("CoinPickup: Spawn voi " + coinValue + " coin.");
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

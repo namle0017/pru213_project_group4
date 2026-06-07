@@ -89,8 +89,19 @@ public class GameSession : MonoBehaviour
         }
     }
 
-    public void AddCoin(int amount)
+    /// <summary>
+    /// Gọi sau khi xe được đặt vào đúng vị trí bắt đầu (ví dụ sau khi InfiniteTerrain drop xe).
+    /// Reset startPlayerX về vị trí hiện tại để tính distance từ đúng điểm xuất phát.
+    /// </summary>
+    public void ResetStartPosition()
     {
+        if (player == null) return;
+        startPlayerX  = player.position.x;
+        currentDistance = 0f;
+        hasStartPosition = true;
+    }
+
+    public void AddCoin(int amount)    {
         if (amount <= 0)
         {
             return;

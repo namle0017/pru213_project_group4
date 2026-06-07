@@ -2,8 +2,19 @@ using UnityEngine;
 
 public class FuelPickup : MonoBehaviour
 {
-    public float fuelAmount = 25f;
+    [Header("Fuel Amount Range")]
+    public float minFuelAmount = 15f;
+    public float maxFuelAmount = 35f;
+
+    private float fuelAmount;
     private GameSession gameSession;
+
+    private void Awake()
+    {
+        // Random lượng fuel khi object được tạo ra
+        fuelAmount = Random.Range(minFuelAmount, maxFuelAmount);
+        Debug.Log("FuelPickup: Spawn voi " + fuelAmount.ToString("F1") + " fuel.");
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -28,7 +39,7 @@ public class FuelPickup : MonoBehaviour
         }
 
         gameSession.AddFuel(fuelAmount);
-        Debug.Log("FuelPickup: Player nhat " + fuelAmount + " fuel.");
+        Debug.Log("FuelPickup: Player nhat " + fuelAmount.ToString("F1") + " fuel.");
         Destroy(gameObject);
     }
 }
