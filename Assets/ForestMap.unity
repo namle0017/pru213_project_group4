@@ -173,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
   gameSession: {fileID: 0}
   coinText: {fileID: 697780744}
+  totalCoinText: {fileID: 0}
   distanceText: {fileID: 1353129544}
   highScoreText: {fileID: 1474751954}
   fuelSlider: {fileID: 1940632381}
@@ -180,6 +181,64 @@ MonoBehaviour:
   highFuelColor: {r: 0, g: 1, b: 0, a: 1}
   mediumFuelColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   lowFuelColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!1 &150946280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 150946283}
+  - component: {fileID: 150946282}
+  - component: {fileID: 150946281}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &150946281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150946280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf26165ca8bfe8e4daf3fd713bd49666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StartGame
+--- !u!114 &150946282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150946280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d175b788179c11844bba4ef3f169e06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseManager
+  pausePanel: {fileID: 0}
+--- !u!4 &150946283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150946280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 542.60614, y: 196.70337, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &244995596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
   player: {fileID: 657070605}
   currentCoins: 0
+  totalCoins: 0
   maxFuel: 100
   currentFuel: 100
   idleFuelDrainPerSecond: 0.5
@@ -2627,3 +2687,4 @@ SceneRoots:
   - {fileID: 1650442042}
   - {fileID: 574252032}
   - {fileID: 582568088}
+  - {fileID: 150946283}
