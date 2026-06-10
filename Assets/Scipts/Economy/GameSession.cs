@@ -112,6 +112,8 @@ public class GameSession : MonoBehaviour
         }
 
         currentCoins += amount;
+        totalCoins += amount;
+        SaveSystem.SaveTotalCoins(totalCoins);
     }
 
     public void AddFuel(float amount)
@@ -136,9 +138,6 @@ public class GameSession : MonoBehaviour
         StopPlayerMovement();
         SaveHighScoreIfNeeded();
 
-        // THÊM 3 DÒNG NÀY ĐỂ SAVE TỔNG VÀNG:
-        totalCoins += currentCoins; // Cộng dồn
-        SaveSystem.SaveTotalCoins(totalCoins);
         Debug.Log("Game Over: Het fuel. Tổng vàng hiện có: " + totalCoins);
         NotifyGameOverPanel();
 
