@@ -47,7 +47,7 @@ public class HUDController : MonoBehaviour
     {
         if (coinText != null)
         {
-            coinText.text = "Coins: " + gameSession.CurrentCoins;
+            coinText.text = "x" + gameSession.CurrentCoins;
         }
         if (totalCoinText != null)
         {
@@ -57,13 +57,13 @@ public class HUDController : MonoBehaviour
         if (distanceText != null)
         {
             int distanceValue = Mathf.FloorToInt(gameSession.CurrentDistance);
-            distanceText.text = "Distance: " + distanceValue + " m";
+            distanceText.text = distanceValue + " m";
         }
 
         if (highScoreText != null)
         {
             int highScoreValue = Mathf.FloorToInt(gameSession.HighScore);
-            highScoreText.text = "Best: " + highScoreValue + " m";
+            highScoreText.text = highScoreValue + " m";
         }
 
         if (fuelSlider != null)
