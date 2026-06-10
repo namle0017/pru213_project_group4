@@ -11,7 +11,6 @@ public class GameSession : MonoBehaviour
     [Header("Coin")]
     [SerializeField] private int currentCoins = 0;
     [SerializeField] private int totalCoins = 0;   
-    private string totalCoinsKey = "TotalCoins_Save"; 
     public int TotalCoins => totalCoins; 
 
     [Header("Fuel")]
@@ -23,7 +22,7 @@ public class GameSession : MonoBehaviour
     [Header("Distance Score")]
     [SerializeField] private float currentDistance = 0f;
     [SerializeField] private float highScore = 0f;
-    [SerializeField] private string highScoreKey = "HighScore_GroundMap";
+    [SerializeField] private string highScoreKey = SaveSystem.HighScoreGroundMapKey;
 
     [Header("State")]
     [SerializeField] private bool isGameOver = false;
@@ -54,8 +53,8 @@ public class GameSession : MonoBehaviour
 
     private void Start()
     {
-        highScore = PlayerPrefs.GetFloat(highScoreKey, 0f);
-        totalCoins = PlayerPrefs.GetInt(totalCoinsKey, 0);
+        highScore = SaveSystem.LoadHighScore(highScoreKey);
+        totalCoins = SaveSystem.LoadTotalCoins();
 
         currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel);
         CacheStartPosition();
@@ -139,8 +138,7 @@ public class GameSession : MonoBehaviour
 
         // THÊM 3 DÒNG NÀY ĐỂ SAVE TỔNG VÀNG:
         totalCoins += currentCoins; // Cộng dồn
-        PlayerPrefs.SetInt(totalCoinsKey, totalCoins); // Lưu xuống máy
-        PlayerPrefs.Save(); // Bắt buộc phải có dòng này để xác nhận lưu
+        SaveSystem.SaveTotalCoins(totalCoins);
         Debug.Log("Game Over: Het fuel. Tổng vàng hiện có: " + totalCoins);
         NotifyGameOverPanel();
 
@@ -227,8 +225,7 @@ public class GameSession : MonoBehaviour
         }
 
         highScore = currentDistance;
-        PlayerPrefs.SetFloat(highScoreKey, highScore);
-        PlayerPrefs.Save();
+        SaveSystem.SaveHighScore(highScoreKey, highScore);
     }
 
     private void NotifyGameOverPanel()
