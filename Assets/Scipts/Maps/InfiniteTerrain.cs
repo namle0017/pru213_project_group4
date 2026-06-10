@@ -26,6 +26,8 @@ public class InfiniteTerrain : MonoBehaviour
 
     [Header("Player Drop")]
     public float playerDropHeight = 5f;
+    [Tooltip("Dịch điểm spawn của xe sang phải (m)")]
+    public float playerSpawnShiftX = 80f;
 
     // ── internal ──────────────────────────────────────────────────────
     private float             _chunkWidth;
@@ -80,7 +82,7 @@ public class InfiniteTerrain : MonoBehaviour
         yield return null;
         yield return null;
 
-        float targetX = _terrainStartX + playerStartOffset;
+        float targetX = _terrainStartX + playerStartOffset + playerSpawnShiftX;
         float groundY = GetGroundYAtX(targetX);
         float spawnY  = groundY + playerDropHeight;
 
