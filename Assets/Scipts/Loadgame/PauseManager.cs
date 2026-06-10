@@ -1,35 +1,113 @@
-﻿using UnityEngine;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
-    [Header("UI Panels")]
-    [Tooltip("Kéo thả Panel Pause của bạn vào đây")]
-    public GameObject pausePanel;
+    [Header("References")]
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameSession gameSession;
 
-    private bool isPaused = false;
+    private bool isPaused;
 
-    // Hàm này sẽ gắn vào Nút Pause trên màn hình
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+        HidePausePanelImmediate();
+    }
+
+    private void Start()
+    {
+        if (gameSession == null)
+        {
+            gameSession = FindFirstObjectByType<GameSession>();
+        }
+
+        RefreshPauseButtonState();
+    }
+
+    private void Update()
+    {
+        if (gameSession == null)
+        {
+            gameSession = FindFirstObjectByType<GameSession>();
+        }
+
+        if (gameSession != null && gameSession.IsGameOver)
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+
+            SetPauseButtonVisible(false);
+            return;
+        }
+
+        SetPauseButtonVisible(!isPaused);
+    }
+
     public void PauseGame()
     {
-        Debug.Log("ĐÃ BẤM VÀO NÚT PAUSE!"); 
+        if (gameSession != null && gameSession.IsGameOver)
+        {
+            return;
+        }
+
         isPaused = true;
-        Time.timeScale = 0f; // Đóng băng thời gian
+        Time.timeScale = 0f;
 
         if (pausePanel != null)
         {
-            pausePanel.SetActive(true); // Bật giao diện Pause lên
+            pausePanel.SetActive(true);
         }
+
+        SetPauseButtonVisible(false);
+        Debug.Log("PauseManager: Game paused.");
     }
 
-    // Hàm này sẽ gắn vào Nút Resume (Chơi tiếp) trên màn hình Pause
     public void ResumeGame()
     {
         isPaused = false;
-        Time.timeScale = 1f; // Chạy lại thời gian
+        Time.timeScale = 1f;
+        HidePausePanelImmediate();
+        RefreshPauseButtonState();
+        Debug.Log("PauseManager: Game resumed.");
+    }
 
+    public void RestartGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadMainMenu()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
+    }
+
+    private void HidePausePanelImmediate()
+    {
         if (pausePanel != null)
         {
-            pausePanel.SetActive(false); // Tắt giao diện Pause đi
+            pausePanel.SetActive(false);
+        }
+    }
+
+    private void RefreshPauseButtonState()
+    {
+        bool shouldShow = !isPaused && (gameSession == null || !gameSession.IsGameOver);
+        SetPauseButtonVisible(shouldShow);
+    }
+
+    private void SetPauseButtonVisible(bool visible)
+    {
+        if (pauseButton != null && pauseButton.activeSelf != visible)
+        {
+            pauseButton.SetActive(visible);
         }
     }
 }
