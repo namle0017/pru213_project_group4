@@ -142,6 +142,7 @@ public class GameSession : MonoBehaviour
         PlayerPrefs.SetInt(totalCoinsKey, totalCoins); // Lưu xuống máy
         PlayerPrefs.Save(); // Bắt buộc phải có dòng này để xác nhận lưu
         Debug.Log("Game Over: Het fuel. Tổng vàng hiện có: " + totalCoins);
+        NotifyGameOverPanel();
 
     }
 
@@ -228,5 +229,31 @@ public class GameSession : MonoBehaviour
         highScore = currentDistance;
         PlayerPrefs.SetFloat(highScoreKey, highScore);
         PlayerPrefs.Save();
+    }
+
+    private void NotifyGameOverPanel()
+    {
+        GameOverPanel panel = FindFirstObjectByType<GameOverPanel>();
+
+        if (panel == null)
+        {
+            GameOverPanel[] panels = Resources.FindObjectsOfTypeAll<GameOverPanel>();
+            foreach (GameOverPanel candidate in panels)
+            {
+                if (candidate.gameObject.scene.IsValid() && candidate.gameObject.scene.isLoaded)
+                {
+                    panel = candidate;
+                    break;
+                }
+            }
+        }
+
+        if (panel != null)
+        {
+            panel.ShowNow(this);
+            return;
+        }
+
+        Debug.LogWarning("GameSession: Khong tim thay GameOverPanel trong scene.");
     }
 }
