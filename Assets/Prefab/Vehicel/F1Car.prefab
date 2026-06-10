@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 8801905976956836514}
   - component: {fileID: 2854402264685569450}
   - component: {fileID: 5517497785060217582}
+  - component: {fileID: 8462135790246813579}
   m_Layer: 0
   m_Name: Player_head
   m_TagString: Untagged
@@ -339,6 +340,20 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: -50
     m_UpperAngle: 50
+--- !u!114 &8462135790246813579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889493154640974925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09af7cf9e8704772b4797c9d8e5345c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHeadCrashDetector
+  gameSession: {fileID: 0}
+  debugLogCrash: 1
 --- !u!1 &6035470298240841750
 GameObject:
   m_ObjectHideFlags: 0
