@@ -6,6 +6,8 @@ public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coinText;
 
+    private const string GarageSceneName = "GarageScene";
+
     private void Start()
     {
         SaveSystem.SaveTotalCoins(5000);
@@ -29,12 +31,22 @@ public class MainMenuController : MonoBehaviour
 
     public void OnShop()
     {
-        Debug.Log("Shop coming soon");
+        OpenGarage();
+    }
+
+    public void OpenGarage()
+    {
+        SceneManager.LoadScene(GarageSceneName);
     }
 
     public void OnDaily()
     {
         Debug.Log("Daily Reward coming soon");
+    }
+
+    public void OnLuckySpin()
+    {
+        Debug.Log("Lucky Spin coming soon");
     }
 
     public void OnQuit()
