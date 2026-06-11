@@ -38,5 +38,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ForestMap.unity
     guid: 86bf5860152c70e458a4fa1e0e86accf
+  - enabled: 1
+    path: Assets/Scenes/SpinScene.unity
+    guid: c53917515252941579288a95e3e67bab
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
