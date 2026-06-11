@@ -141,6 +141,22 @@ public class PickupSpawnerRuntime : MonoBehaviour
     private int _tutorialCoinClustersSpawned;
     private bool _isInitialized;
 
+    public void SetPlayer(Transform newPlayer)
+    {
+        player = newPlayer;
+
+        if (player == null)
+        {
+            _isInitialized = false;
+            return;
+        }
+
+        if (_random != null)
+        {
+            InitializeSpawnState();
+        }
+    }
+
     private IEnumerator Start()
     {
         if (player == null)

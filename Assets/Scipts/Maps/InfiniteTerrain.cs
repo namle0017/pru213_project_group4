@@ -65,6 +65,11 @@ public class InfiniteTerrain : MonoBehaviour
         StartCoroutine(DropAfterColliderReady());
     }
 
+    public void SetPlayer(Transform newPlayer)
+    {
+        player = newPlayer;
+    }
+
     // ── Coroutine drop xe ─────────────────────────────────────────────
 
     private IEnumerator DropAfterColliderReady()
