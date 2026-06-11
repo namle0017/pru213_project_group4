@@ -18,6 +18,17 @@ public static class SaveSystem
         PlayerPrefs.Save();
     }
 
+    public static void AddCoins(int amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        int totalCoins = LoadTotalCoins();
+        SaveTotalCoins(totalCoins + amount);
+    }
+
     public static bool SpendCoins(int amount)
     {
         if (amount <= 0)
