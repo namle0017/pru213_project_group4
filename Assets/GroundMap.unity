@@ -484,23 +484,59 @@ MonoBehaviour:
   player: {fileID: 657070605}
   coinPrefab: {fileID: 4073224811142967076, guid: f9db681a4b456490f8451da4e9a98ce7, type: 3}
   fuelPrefab: {fileID: 3332411139231926737, guid: 8ada5ac0bcd52442ba755396a4f786d1, type: 3}
+  seed: 12345
   spawnAheadDistance: 20
-  fuelIntervalStart: 15
-  fuelIntervalMax: 60
-  fuelIntervalGrowth: 3
-  fuelWaveAmplitude: 8
-  fuelWavePeriod: 6
-  coinIntervalStart: 5
-  coinIntervalMax: 25
-  coinIntervalGrowth: 0.8
-  minCoinsPerCluster: 3
-  maxCoinsPerCluster: 5
+  minimumFuelSpawnDistance: 60
+  fuelGroundYOffset: 0.45
+  firstCoinSpawnDistance: 15
+  secondCoinSpawnDistance: 50
   coinClusterSpacing: 1
+  coinArcHeightStep: 0.08
   raycastStartHeight: 20
   terrainLayer:
     serializedVersion: 2
     m_Bits: 0
-  groundYOffset: 0.5
+  cleanupBehindDistance: 100
+  tutorialZone:
+    minDistance: 0
+    maxDistance: 100
+    fuelIntervalMin: 60
+    fuelIntervalMax: 80
+    coinIntervalMin: 18
+    coinIntervalMax: 24
+    minCoinsPerCluster: 1
+    maxCoinsPerCluster: 2
+    coinHeightOffset: 0.6
+  easyZone:
+    minDistance: 100
+    maxDistance: 300
+    fuelIntervalMin: 80
+    fuelIntervalMax: 110
+    coinIntervalMin: 15
+    coinIntervalMax: 25
+    minCoinsPerCluster: 3
+    maxCoinsPerCluster: 5
+    coinHeightOffset: 0.9
+  mediumZone:
+    minDistance: 300
+    maxDistance: 600
+    fuelIntervalMin: 100
+    fuelIntervalMax: 140
+    coinIntervalMin: 18
+    coinIntervalMax: 30
+    minCoinsPerCluster: 4
+    maxCoinsPerCluster: 6
+    coinHeightOffset: 1.15
+  hardZone:
+    minDistance: 600
+    maxDistance: 999999
+    fuelIntervalMin: 120
+    fuelIntervalMax: 170
+    coinIntervalMin: 20
+    coinIntervalMax: 35
+    minCoinsPerCluster: 5
+    maxCoinsPerCluster: 7
+    coinHeightOffset: 1.45
 --- !u!4 &247258540
 Transform:
   m_ObjectHideFlags: 0
@@ -713,8 +749,8 @@ Transform:
   m_GameObject: {fileID: 339194955}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
-  m_LocalScale: {x: 1.08, y: 1.08, z: 1}
+  m_LocalPosition: {x: 0.1274, y: 0.2546, z: 20}
+  m_LocalScale: {x: 1.6415416, y: 1.0328971, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 339194952}
@@ -819,6 +855,7 @@ MonoBehaviour:
   chunksBehind: 2
   playerStartOffset: 10
   playerDropHeight: 5
+  playerSpawnShiftX: 80
 --- !u!4 &348344760
 Transform:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Order: 0
     m_Sprites:
     - {fileID: 9064663316551836333, guid: 737f2d0d5542e9445b9e9d62cc02e0cc, type: 3}
-  m_FillTexture: {fileID: 2800000, guid: 48bf821738474474cabe398ba6873e78, type: 3}
+  m_FillTexture: {fileID: 2800000, guid: 1ffd62f7ad2ba284aa1fc59a5046e031, type: 3}
   m_CornerSprites:
   - m_CornerType: 0
     m_Sprites:
