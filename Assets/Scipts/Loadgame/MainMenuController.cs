@@ -7,6 +7,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinText;
 
     private const string GarageSceneName = "GarageScene";
+    private const string DailyRewardSceneName = "DailyRewardScene";
 
     private void Start()
     {
@@ -48,7 +49,12 @@ public class MainMenuController : MonoBehaviour
 
     public void OnDaily()
     {
-        Debug.Log("Daily Reward coming soon");
+        OnDailyReward();
+    }
+
+    public void OnDailyReward()
+    {
+        SceneManager.LoadScene(DailyRewardSceneName);
     }
 
     public void OnLuckySpin()
