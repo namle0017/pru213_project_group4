@@ -76,11 +76,18 @@ public class DailyRewardController : MonoBehaviour
 
         int claimedDay = Mathf.Clamp(currentDay, 1, DaysInCycle);
         ApplyReward(claimedDay);
-
-        claimedMask |= GetDayMask(claimedDay);
         lastClaimDate = GetTodayString();
 
-        currentDay = claimedDay < DaysInCycle ? claimedDay + 1 : 1;
+        if (claimedDay >= DaysInCycle)
+        {
+            claimedMask = 0;
+            currentDay = 1;
+        }
+        else
+        {
+            claimedMask |= GetDayMask(claimedDay);
+            currentDay = claimedDay + 1;
+        }
 
         SaveDailyState();
         RefreshUI();
