@@ -6,10 +6,20 @@ public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coinText;
 
+    private const string GarageSceneName = "GarageScene";
+    private const string DailyRewardSceneName = "DailyRewardScene";
+
     private void Start()
     {
-        SaveSystem.SaveTotalCoins(5000);
         RefreshCoins();
+    }
+
+    [ContextMenu("Dev/Add 5000 Coins")]
+    private void DevAddCoins()
+    {
+        SaveSystem.AddCoins(5000);
+        RefreshCoins();
+        Debug.Log("MainMenuController: Added 5000 coins for dev testing.");
     }
 
     public void RefreshCoins()
@@ -29,12 +39,27 @@ public class MainMenuController : MonoBehaviour
 
     public void OnShop()
     {
-        Debug.Log("Shop coming soon");
+        OpenGarage();
+    }
+
+    public void OpenGarage()
+    {
+        SceneManager.LoadScene(GarageSceneName);
     }
 
     public void OnDaily()
     {
-        Debug.Log("Daily Reward coming soon");
+        OnDailyReward();
+    }
+
+    public void OnDailyReward()
+    {
+        SceneManager.LoadScene(DailyRewardSceneName);
+    }
+
+    public void OnLuckySpin()
+    {
+        SceneManager.LoadScene("SpinScene");
     }
 
     public void OnQuit()

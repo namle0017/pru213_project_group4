@@ -1436,6 +1436,7 @@ GameObject:
   - component: {fileID: 902096098}
   - component: {fileID: 902096097}
   - component: {fileID: 902096096}
+  - component: {fileID: 902096099}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1485,6 +1486,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &902096099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902096095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d6019040ce4b41831f084af8e8c824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectedVehicleLoader
+  placeholderPlayer: {fileID: 657070605}
+  gameSession: {fileID: 1151335919}
+  infiniteTerrain: {fileID: 348344759}
+  pickupSpawnerRuntime: {fileID: 247258539}
+  playerCamera: {fileID: 700092854}
+  vehiclePrefabs:
+  - vehicleId: basic_car
+    vehiclePrefab: {fileID: 8207567143010157627, guid: ef5372470f2b70d4a9ea66ca0e613d9b, type: 3}
+  - vehicleId: f1_car
+    vehiclePrefab: {fileID: 8207567143010157627, guid: fb23fbc55e5957f4f81a0cabdb9521aa, type: 3}
+  - vehicleId: motor
+    vehiclePrefab: {fileID: 8207567143010157627, guid: f6a273193616dc24ea373c9e54531556, type: 3}
+  destroyPlaceholderPlayer: 1
 --- !u!1 &992780987
 GameObject:
   m_ObjectHideFlags: 0

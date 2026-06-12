@@ -105,6 +105,14 @@ public class GameSession : MonoBehaviour
         hasStartPosition = true;
     }
 
+    public void SetPlayer(Transform newPlayer)
+    {
+        player = newPlayer;
+        hasStartPosition = false;
+        CacheStartPosition();
+        CachePlayerComponents();
+    }
+
     public void AddCoin(int amount)    {
         if (amount <= 0)
         {
