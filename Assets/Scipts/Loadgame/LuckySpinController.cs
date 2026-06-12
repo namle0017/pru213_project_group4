@@ -10,6 +10,7 @@ using UnityEditor;
 public class LuckySpinController : MonoBehaviour
 {
     private const string CoinRewardSpritePath = "Assets/Sprites/component/Everything/Icon_start.png";
+    private const string JackpotClipPath = "Assets/Audio/ jackpot_unlock.mp3";
 
     [Header("UI References")]
     [SerializeField] private RectTransform wheelTransform;
@@ -31,6 +32,12 @@ public class LuckySpinController : MonoBehaviour
     [SerializeField] private float angleOffset = 0f;
     [SerializeField] private bool demoMode = true;
     [SerializeField] private Sprite coinRewardSprite;
+    [SerializeField] private float boosted20CoinWeightMultiplier = 1.8f;
+    [SerializeField] private float boosted50CoinWeightMultiplier = 1.6f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip jackpotUnlockClip;
+    [SerializeField] [Range(0f, 1f)] private float jackpotVolume = 1f;
 
     private const string MenuSceneName = "Menu";
     private const string F1VehicleId = "f1_car";
@@ -58,7 +65,7 @@ public class LuckySpinController : MonoBehaviour
     {
         AutoAssignReferences();
         PreserveSpinButtonVisualWhenDisabled();
-        TryAssignEditorSprites();
+        TryAssignEditorAssets();
 
         if (resultRewardImage != null)
         {
@@ -165,7 +172,7 @@ public class LuckySpinController : MonoBehaviour
             return;
         }
 
-        StartSpinFlow();
+        StartSpinFlow(false);
     }
 
     public void OnSpinAgainPressed()
@@ -177,10 +184,10 @@ public class LuckySpinController : MonoBehaviour
             return;
         }
 
-        StartSpinFlow();
+        StartSpinFlow(true);
     }
 
-    private void StartSpinFlow()
+    private void StartSpinFlow(bool isSpinAgain)
     {
         if (SaveSystem.LoadTotalCoins() < spinCost)
         {
@@ -195,7 +202,7 @@ public class LuckySpinController : MonoBehaviour
         }
 
         RefreshCoinText();
-        RewardSegment reward = ChooseReward();
+        RewardSegment reward = ChooseReward(isSpinAgain);
         StartCoroutine(SpinToRewardCoroutine(reward));
     }
 
@@ -228,7 +235,7 @@ public class LuckySpinController : MonoBehaviour
         SetPopupButtonsInteractable(true);
     }
 
-    private RewardSegment ChooseReward()
+    private RewardSegment ChooseReward(bool isSpinAgain)
     {
         if (!demoMode)
         {
@@ -239,7 +246,7 @@ public class LuckySpinController : MonoBehaviour
         float totalWeight = 0f;
         for (int i = 0; i < demoRewards.Length; i++)
         {
-            totalWeight += demoRewards[i].weight;
+            totalWeight += GetEffectiveWeight(demoRewards[i]);
         }
 
         float randomPoint = Random.Range(0f, totalWeight);
@@ -247,7 +254,7 @@ public class LuckySpinController : MonoBehaviour
 
         for (int i = 0; i < demoRewards.Length; i++)
         {
-            cumulative += demoRewards[i].weight;
+            cumulative += GetEffectiveWeight(demoRewards[i]);
             if (randomPoint <= cumulative)
             {
                 return demoRewards[i];
@@ -255,6 +262,27 @@ public class LuckySpinController : MonoBehaviour
         }
 
         return demoRewards[demoRewards.Length - 1];
+    }
+
+    private float GetEffectiveWeight(RewardSegment reward)
+    {
+        float effectiveWeight = reward.weight;
+
+        if (reward.rewardType != RewardType.Coins)
+        {
+            return effectiveWeight;
+        }
+
+        if (reward.coinAmount == 20)
+        {
+            effectiveWeight *= Mathf.Max(1f, boosted20CoinWeightMultiplier);
+        }
+        else if (reward.coinAmount == 50)
+        {
+            effectiveWeight *= Mathf.Max(1f, boosted50CoinWeightMultiplier);
+        }
+
+        return effectiveWeight;
     }
 
     private void ApplyReward(RewardSegment reward)
@@ -271,6 +299,7 @@ public class LuckySpinController : MonoBehaviour
                 if (!SaveSystem.IsVehicleUnlocked(F1VehicleId))
                 {
                     SaveSystem.SaveVehicleUnlocked(F1VehicleId, true);
+                    PlayJackpotSound();
                     ShowResultPopup("JACKPOT!", "F1 CAR UNLOCKED!", PopupRewardVisual.F1);
                 }
                 else
@@ -402,14 +431,29 @@ public class LuckySpinController : MonoBehaviour
         spinButton.colors = colors;
     }
 
-    private void TryAssignEditorSprites()
+    private void TryAssignEditorAssets()
     {
 #if UNITY_EDITOR
         if (coinRewardSprite == null)
         {
             coinRewardSprite = AssetDatabase.LoadAssetAtPath<Sprite>(CoinRewardSpritePath);
         }
+
+        if (jackpotUnlockClip == null)
+        {
+            jackpotUnlockClip = AssetDatabase.LoadAssetAtPath<AudioClip>(JackpotClipPath);
+        }
 #endif
+    }
+
+    private void PlayJackpotSound()
+    {
+        if (jackpotUnlockClip == null)
+        {
+            return;
+        }
+
+        AudioSource.PlayClipAtPoint(jackpotUnlockClip, Vector3.zero, jackpotVolume);
     }
 
     private void SetPopupButtonsInteractable(bool value)

@@ -324,6 +324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 549937363}
   - component: {fileID: 549937362}
+  - component: {fileID: 549937364}
   m_Layer: 0
   m_Name: Audio Source
   m_TagString: Untagged
@@ -428,6 +429,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &549937364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549937361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c2159b369c44f82a79082221b51965d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PersistentBackgroundMusic
 --- !u!4 &549937363
 Transform:
   m_ObjectHideFlags: 0
@@ -1720,6 +1733,10 @@ MonoBehaviour:
   angleOffset: 0
   demoMode: 1
   coinRewardSprite: {fileID: 0}
+  boosted20CoinWeightMultiplier: 1.8
+  boosted50CoinWeightMultiplier: 1.6
+  jackpotUnlockClip: {fileID: 8300000, guid: f708bcad38c0c4debbd118767867ada3, type: 3}
+  jackpotVolume: 1
 --- !u!1 &1478495972
 GameObject:
   m_ObjectHideFlags: 0
