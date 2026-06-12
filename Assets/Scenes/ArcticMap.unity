@@ -1208,6 +1208,7 @@ GameObject:
   - component: {fileID: 361743433}
   - component: {fileID: 361743432}
   - component: {fileID: 361743431}
+  - component: {fileID: 2130103002}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1242,6 +1243,31 @@ MonoBehaviour:
   pausePanel: {fileID: 1128600621}
   pauseButton: {fileID: 1840797041}
   gameSession: {fileID: 1086783005}
+--- !u!114 &2130103002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361743430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d6019040ce4b41831f084af8e8c824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectedVehicleLoader
+  placeholderPlayer: {fileID: 657070605}
+  gameSession: {fileID: 1086783005}
+  infiniteTerrain: {fileID: 2128365858}
+  pickupSpawnerRuntime: {fileID: 10556380}
+  playerCamera: {fileID: 859818876}
+  vehiclePrefabs:
+  - vehicleId: basic_car
+    vehiclePrefab: {fileID: 8207567143010157627, guid: ef5372470f2b70d4a9ea66ca0e613d9b, type: 3}
+  - vehicleId: f1_car
+    vehiclePrefab: {fileID: 8207567143010157627, guid: fb23fbc55e5957f4f81a0cabdb9521aa, type: 3}
+  - vehicleId: motor
+    vehiclePrefab: {fileID: 8207567143010157627, guid: f6a273193616dc24ea373c9e54531556, type: 3}
+  destroyPlaceholderPlayer: 1
 --- !u!4 &361743433
 Transform:
   m_ObjectHideFlags: 0

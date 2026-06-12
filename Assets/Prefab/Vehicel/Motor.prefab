@@ -1107,6 +1107,7 @@ GameObject:
   - component: {fileID: 4757508950905726368}
   - component: {fileID: 5929105237037863908}
   - component: {fileID: 773500060726475972}
+  - component: {fileID: 604100000000000101}
   m_Layer: 0
   m_Name: Motor
   m_TagString: Untagged
@@ -1236,6 +1237,32 @@ MonoBehaviour:
   _reverseSpeedMultiplier: 0.45
   _coastDecelRate: 3.2
   _activeBrakeDecelRate: 13
+--- !u!114 &604100000000000101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207567143010157627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb815b5eb6d4202bd2d77b6cda8910f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MotorDriverLegAnimator
+  _driverLegBack: {fileID: 604100000000000002}
+  _driverLegFront: {fileID: 604100000000000012}
+  _driverShoe: {fileID: 604100000000000022}
+  _frontWheelRb: {fileID: 7107801582381497131}
+  _rearWheelRb: {fileID: 1101419279124583404}
+  _pedalSpeedMultiplier: 0.045
+  _maxPedalSpeed: 8
+  _movementThreshold: 8
+  _returnSpeed: 8
+  _backLegAmplitude: 18
+  _frontLegAmplitude: 24
+  _shoeAmplitude: 14
+  _frontLegPhaseOffset: 3.1415927
+  _shoePhaseOffset: 1.9
 --- !u!1 &8570879245980179386
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,11 @@ public class MapSelectController : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+    public void LoadNextPage()
+    {
+        SceneManager.LoadScene("LevelSelect2");
+    }
+
     public void HandleMapCardAction(MapCardUI card)
     {
         if (card == null)
