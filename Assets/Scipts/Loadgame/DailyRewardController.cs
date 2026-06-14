@@ -9,6 +9,7 @@ public class DailyRewardController : MonoBehaviour
     private const string DailyCurrentDayKey = "DailyCurrentDay";
     private const string DailyLastClaimDateKey = "DailyLastClaimDate";
     private const string DailyClaimedMaskKey = "DailyClaimedMask";
+    private const string DailyLastClaimedDayKey = "DailyLastClaimedDay";
     private const string DateFormat = "yyyy-MM-dd";
     private const int DaysInCycle = 7;
     private const int FullCycleMask = 0b1111111;
@@ -45,6 +46,7 @@ public class DailyRewardController : MonoBehaviour
     private int currentDay;
     private int claimedMask;
     private string lastClaimDate;
+    private int lastClaimedDay;
 
     public int CurrentDayForDebug => currentDay;
     public int ClaimedMaskForDebug => claimedMask;
@@ -61,6 +63,7 @@ public class DailyRewardController : MonoBehaviour
 
     public void GoHome()
     {
+        AudioService.PlayBackClose();
         SceneManager.LoadScene(menuSceneName);
     }
 
@@ -70,15 +73,18 @@ public class DailyRewardController : MonoBehaviour
 
         if (HasClaimedToday())
         {
+            AudioService.PlayErrorNotEnoughCoin();
             RefreshUI();
             return;
         }
 
+        AudioService.PlayButtonClick();
         int claimedDay = Mathf.Clamp(currentDay, 1, DaysInCycle);
         ApplyReward(claimedDay);
 
         claimedMask |= GetDayMask(claimedDay);
         lastClaimDate = GetTodayString();
+        lastClaimedDay = claimedDay;
 
         currentDay = claimedDay < DaysInCycle ? claimedDay + 1 : 1;
 
@@ -88,6 +94,7 @@ public class DailyRewardController : MonoBehaviour
 
     public void HideRewardPopup()
     {
+        AudioService.PlayBackClose();
         if (rewardPopupRoot != null)
         {
             rewardPopupRoot.SetActive(false);
@@ -98,6 +105,7 @@ public class DailyRewardController : MonoBehaviour
     public void DevSimulateNewDay()
     {
         PlayerPrefs.SetString(DailyLastClaimDateKey, string.Empty);
+        PlayerPrefs.SetInt(DailyLastClaimedDayKey, 0);
         PlayerPrefs.Save();
         LoadDailyState();
         RefreshUI();
@@ -115,6 +123,7 @@ public class DailyRewardController : MonoBehaviour
         int safeDay = Mathf.Clamp(day, 1, DaysInCycle);
         PlayerPrefs.SetInt(DailyCurrentDayKey, safeDay);
         PlayerPrefs.SetString(DailyLastClaimDateKey, string.Empty);
+        PlayerPrefs.SetInt(DailyLastClaimedDayKey, 0);
         PlayerPrefs.Save();
         LoadDailyState();
         RefreshUI();
@@ -127,6 +136,7 @@ public class DailyRewardController : MonoBehaviour
         PlayerPrefs.DeleteKey(DailyCurrentDayKey);
         PlayerPrefs.DeleteKey(DailyLastClaimDateKey);
         PlayerPrefs.DeleteKey(DailyClaimedMaskKey);
+        PlayerPrefs.DeleteKey(DailyLastClaimedDayKey);
         PlayerPrefs.Save();
         LoadDailyState();
         RefreshUI();
@@ -159,49 +169,54 @@ public class DailyRewardController : MonoBehaviour
 
     private void AutoWireReferences()
     {
-        homeButton ??= FindComponentByName<Button>("HomeButton");
-        claimButton ??= FindComponentByName<Button>("ClaimButton");
-        claimedButton ??= FindComponentByName<Button>("ClaimedButton");
-        popupOkButton ??= FindComponentByName<Button>("PopupOkButton");
+        homeButton ??= FindSceneComponentByName<Button>("HomeButton");
+        claimButton ??= FindSceneComponentByName<Button>("ClaimButton");
+        claimedButton ??= FindSceneComponentByName<Button>("ClaimedButton");
+        popupOkButton ??= FindSceneComponentByName<Button>("PopupOkButton");
 
-        rewardPopupRoot ??= FindGameObjectByName("RewardPopupRoot");
-        popupRewardIcon ??= FindComponentByName<Image>("PopupRewardIcon");
-        popupTitleText ??= FindComponentByName<TextMeshProUGUI>("PopupTitleText");
-        popupLine1Text ??= FindComponentByName<TextMeshProUGUI>("PopupLine1Text");
-        popupLine2Text ??= FindComponentByName<TextMeshProUGUI>("PopupLine2Text");
+        rewardPopupRoot ??= FindSceneGameObjectByName("RewardPopupRoot");
+        popupRewardIcon ??= FindSceneComponentByName<Image>("PopupRewardIcon");
+        popupTitleText ??= FindSceneComponentByName<TextMeshProUGUI>("PopupTitleText");
+        popupLine1Text ??= FindSceneComponentByName<TextMeshProUGUI>("PopupLine1Text");
+        popupLine2Text ??= FindSceneComponentByName<TextMeshProUGUI>("PopupLine2Text");
 
         for (int i = 0; i < DaysInCycle; i++)
         {
-            Transform slot = FindTransformByName("DaySlot" + (i + 1));
+            Transform slot = FindSceneTransformByName("DaySlot" + (i + 1));
             daySlots[i] = slot;
 
             if (slot == null)
             {
+                Debug.LogWarning("DailyRewardController: Khong tim thay DaySlot" + (i + 1) + " trong scene " + gameObject.scene.name);
                 continue;
             }
 
-            Transform badgeTransform = slot.Find("ClaimBadge");
+            Transform badgeTransform = FindChildRecursive(slot, "ClaimBadge");
             if (badgeTransform != null)
             {
                 claimBadges[i] = badgeTransform.GetComponent<Image>();
             }
 
-            Transform dayLabelTransform = slot.Find("DayLabel");
+            Transform dayLabelTransform = FindChildRecursive(slot, "DayLabel");
             if (dayLabelTransform != null)
             {
                 dayLabels[i] = dayLabelTransform.gameObject;
             }
 
-            Transform rewardIconTransform = slot.Find("RewardIcon");
+            Transform rewardIconTransform = FindChildRecursive(slot, "RewardIcon");
             if (rewardIconTransform != null)
             {
                 rewardIcons[i] = rewardIconTransform.gameObject;
             }
 
-            Transform rewardAmountTextTransform = slot.Find("RewardAmountText");
+            Transform rewardAmountTextTransform = FindChildRecursive(slot, "RewardAmountText");
             if (rewardAmountTextTransform != null)
             {
                 rewardAmountTexts[i] = rewardAmountTextTransform.gameObject;
+            }
+            else
+            {
+                Debug.LogWarning("DailyRewardController: DaySlot" + (i + 1) + " khong co RewardAmountText.");
             }
 
             Image rewardIcon = rewardIconTransform != null
@@ -258,6 +273,12 @@ public class DailyRewardController : MonoBehaviour
         currentDay = Mathf.Clamp(PlayerPrefs.GetInt(DailyCurrentDayKey, 1), 1, DaysInCycle);
         claimedMask = PlayerPrefs.GetInt(DailyClaimedMaskKey, 0);
         lastClaimDate = PlayerPrefs.GetString(DailyLastClaimDateKey, string.Empty);
+        lastClaimedDay = Mathf.Clamp(PlayerPrefs.GetInt(DailyLastClaimedDayKey, 0), 0, DaysInCycle);
+
+        if (HasClaimedToday() && lastClaimedDay == 0)
+        {
+            lastClaimedDay = currentDay == 1 ? DaysInCycle : currentDay - 1;
+        }
 
         if (currentDay == 1 && claimedMask == FullCycleMask && !HasClaimedToday())
         {
@@ -265,6 +286,16 @@ public class DailyRewardController : MonoBehaviour
             PlayerPrefs.SetInt(DailyClaimedMaskKey, claimedMask);
             PlayerPrefs.Save();
         }
+
+        NormalizeClaimedMaskFromProgress();
+        RepairClaimedMaskIfNeeded();
+
+        Debug.Log(
+            "DailyRewardController LoadDailyState: currentDay=" + currentDay +
+            ", claimedMask=" + claimedMask +
+            ", lastClaimDate=" + lastClaimDate +
+            ", lastClaimedDay=" + lastClaimedDay +
+            ", claimedToday=" + HasClaimedToday());
     }
 
     private void SaveDailyState()
@@ -272,6 +303,7 @@ public class DailyRewardController : MonoBehaviour
         PlayerPrefs.SetInt(DailyCurrentDayKey, currentDay);
         PlayerPrefs.SetString(DailyLastClaimDateKey, lastClaimDate);
         PlayerPrefs.SetInt(DailyClaimedMaskKey, claimedMask);
+        PlayerPrefs.SetInt(DailyLastClaimedDayKey, lastClaimedDay);
         PlayerPrefs.Save();
     }
 
@@ -293,7 +325,7 @@ public class DailyRewardController : MonoBehaviour
 
         for (int i = 0; i < claimBadges.Length; i++)
         {
-            bool isClaimed = (claimedMask & GetDayMask(i + 1)) != 0;
+            bool isClaimed = IsDayClaimedForDisplay(i + 1);
             SetDaySlotClaimedVisual(i, isClaimed);
         }
     }
@@ -303,6 +335,10 @@ public class DailyRewardController : MonoBehaviour
         if (claimBadges[index] != null)
         {
             claimBadges[index].gameObject.SetActive(isClaimed);
+            if (isClaimed)
+            {
+                claimBadges[index].transform.SetAsLastSibling();
+            }
         }
 
         if (dayLabels[index] != null)
@@ -334,6 +370,7 @@ public class DailyRewardController : MonoBehaviour
         if (!SaveSystem.IsVehicleUnlocked(VehicleIds.Motor))
         {
             SaveSystem.SaveVehicleUnlocked(VehicleIds.Motor, true);
+            AudioService.PlayUnlockSuccess();
             ShowRewardPopup("SPECIAL", "MOTOR UNLOCKED", "See you tomorrow!", motorRewardSprite);
             return;
         }
@@ -370,6 +407,8 @@ public class DailyRewardController : MonoBehaviour
         {
             rewardPopupRoot.SetActive(true);
         }
+
+        AudioService.PlayRewardPopup();
     }
 
     private bool HasClaimedToday()
@@ -387,34 +426,128 @@ public class DailyRewardController : MonoBehaviour
         return 1 << (Mathf.Clamp(day, 1, DaysInCycle) - 1);
     }
 
-    private static T FindComponentByName<T>(string objectName) where T : Component
+    private T FindSceneComponentByName<T>(string objectName) where T : Component
     {
-        GameObject gameObject = FindGameObjectByName(objectName);
-        return gameObject != null ? gameObject.GetComponent<T>() : null;
+        GameObject sceneObject = FindSceneGameObjectByName(objectName);
+        return sceneObject != null ? sceneObject.GetComponent<T>() : null;
     }
 
-    private static GameObject FindGameObjectByName(string objectName)
+    private GameObject FindSceneGameObjectByName(string objectName)
     {
-        Transform transform = FindTransformByName(objectName);
-        return transform != null ? transform.gameObject : null;
+        Transform sceneTransform = FindSceneTransformByName(objectName);
+        return sceneTransform != null ? sceneTransform.gameObject : null;
     }
 
-    private static Transform FindTransformByName(string objectName)
+    private Transform FindSceneTransformByName(string objectName)
     {
-        Transform[] transforms = Resources.FindObjectsOfTypeAll<Transform>();
-        foreach (Transform transform in transforms)
+        foreach (GameObject rootObject in gameObject.scene.GetRootGameObjects())
         {
-            if (transform.name != objectName)
+            Transform foundTransform = FindChildRecursive(rootObject.transform, objectName);
+            if (foundTransform != null)
             {
-                continue;
+                return foundTransform;
+            }
+        }
+
+        return null;
+    }
+
+    private void RepairClaimedMaskIfNeeded()
+    {
+        if (!HasClaimedToday())
+        {
+            return;
+        }
+
+        int inferredClaimedDay = lastClaimedDay > 0
+            ? lastClaimedDay
+            : (currentDay == 1 ? DaysInCycle : currentDay - 1);
+        int inferredMask = GetDayMask(inferredClaimedDay);
+
+        if ((claimedMask & inferredMask) != 0)
+        {
+            return;
+        }
+
+        claimedMask |= inferredMask;
+        PlayerPrefs.SetInt(DailyClaimedMaskKey, claimedMask);
+        PlayerPrefs.Save();
+    }
+
+    private void NormalizeClaimedMaskFromProgress()
+    {
+        int normalizedMask = 0;
+
+        if (currentDay > 1)
+        {
+            for (int day = 1; day < currentDay; day++)
+            {
+                normalizedMask |= GetDayMask(day);
+            }
+        }
+        else if (!HasClaimedToday())
+        {
+            if (claimedMask != 0)
+            {
+                claimedMask = 0;
+                PlayerPrefs.SetInt(DailyClaimedMaskKey, claimedMask);
+                PlayerPrefs.Save();
             }
 
-            if (!transform.gameObject.scene.IsValid() || !transform.gameObject.scene.isLoaded)
+            return;
+        }
+
+        if ((claimedMask & normalizedMask) == normalizedMask)
+        {
+            return;
+        }
+
+        claimedMask |= normalizedMask;
+        PlayerPrefs.SetInt(DailyClaimedMaskKey, claimedMask);
+        PlayerPrefs.Save();
+    }
+
+    private bool IsDayClaimedForDisplay(int day)
+    {
+        int dayMask = GetDayMask(day);
+        if ((claimedMask & dayMask) != 0)
+        {
+            return true;
+        }
+
+        if (HasClaimedToday() && lastClaimedDay == day)
+        {
+            return true;
+        }
+
+        if (currentDay > 1 && day < currentDay)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static Transform FindChildRecursive(Transform parent, string childName)
+    {
+        if (parent == null)
+        {
+            return null;
+        }
+
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            if (child.name == childName)
             {
-                continue;
+                return child;
             }
 
-            return transform;
+            Transform nestedChild = FindChildRecursive(child, childName);
+            if (nestedChild != null)
+            {
+                return nestedChild;
+            }
         }
 
         return null;

@@ -58,6 +58,7 @@ public class PauseManager : MonoBehaviour
             return;
         }
 
+        AudioService.PlayButtonClick();
         isPaused = true;
         Time.timeScale = 0f;
 
@@ -72,6 +73,7 @@ public class PauseManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        AudioService.PlayBackClose();
         isPaused = false;
         Time.timeScale = 1f;
         HidePausePanelImmediate();
@@ -81,6 +83,7 @@ public class PauseManager : MonoBehaviour
 
     public void RestartGame()
     {
+        AudioService.PlayButtonClick();
         isPaused = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -88,6 +91,7 @@ public class PauseManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        AudioService.PlayBackClose();
         isPaused = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");

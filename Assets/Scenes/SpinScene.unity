@@ -1732,7 +1732,7 @@ MonoBehaviour:
   duplicateF1CoinReward: 500
   angleOffset: 0
   demoMode: 1
-  coinRewardSprite: {fileID: 0}
+  coinRewardSprite: {fileID: 3647887040774636203, guid: c099afdd196944438870dc47c492614a, type: 3}
   boosted20CoinWeightMultiplier: 1.8
   boosted50CoinWeightMultiplier: 1.6
   jackpotUnlockClip: {fileID: 8300000, guid: f708bcad38c0c4debbd118767867ada3, type: 3}

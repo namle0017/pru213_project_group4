@@ -2,10 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1000)]
-[RequireComponent(typeof(AudioSource))]
 public class PersistentBackgroundMusic : MonoBehaviour
 {
-    private static readonly string[] DefaultAllowedScenes =
+    private static readonly string[] DefaultUiScenes =
     {
         "Menu",
         "LevelSelect",
@@ -16,48 +15,58 @@ public class PersistentBackgroundMusic : MonoBehaviour
         "SpinScene",
     };
 
+    private static readonly string[] DefaultGameplayScenes =
+    {
+        "GroundMap",
+        "DessertMap",
+        "ArcticMap",
+        "MarsMap",
+        "HighwayMap",
+        "AlienMap",
+        "MoonMap",
+        "ForestMap",
+    };
+
     private static PersistentBackgroundMusic instance;
 
-    [SerializeField] private string[] allowedSceneNames = DefaultAllowedScenes;
+    [SerializeField] private string[] uiSceneNames = DefaultUiScenes;
+    [SerializeField] private string[] gameplaySceneNames = DefaultGameplayScenes;
+    [SerializeField] [Range(0f, 1f)] private float bgmVolume = 0.7f;
 
     private AudioSource audioSource;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Bootstrap()
+    {
+        if (instance != null)
+        {
+            return;
+        }
+
+        GameObject musicObject = new GameObject("PersistentBackgroundMusic");
+        musicObject.AddComponent<AudioSource>();
+        musicObject.AddComponent<PersistentBackgroundMusic>();
+    }
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
 
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         if (instance != null && instance != this)
         {
-            bool sameClip = instance.audioSource != null
-                && audioSource != null
-                && instance.audioSource.clip == audioSource.clip;
-
-            if (sameClip || instance.audioSource == null || audioSource == null)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            Destroy(gameObject);
+            return;
         }
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-
-        if (audioSource == null)
-        {
-            return;
-        }
-
-        audioSource.playOnAwake = false;
-
-        if (!audioSource.isPlaying && audioSource.clip != null)
-        {
-            audioSource.Play();
-        }
-
-        if (!IsSceneAllowed(SceneManager.GetActiveScene().name))
-        {
-            DestroySelf();
-        }
+        ConfigureAudioSource();
+        ApplyMusicForScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnEnable()
@@ -72,18 +81,54 @@ public class PersistentBackgroundMusic : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (!IsSceneAllowed(scene.name))
+        ApplyMusicForScene(scene.name);
+    }
+
+    private void ConfigureAudioSource()
+    {
+        audioSource.playOnAwake = false;
+        audioSource.loop = true;
+        audioSource.spatialBlend = 0f;
+        audioSource.volume = bgmVolume;
+    }
+
+    private void ApplyMusicForScene(string sceneName)
+    {
+        AudioClip targetClip = null;
+
+        if (SceneExistsInList(sceneName, uiSceneNames, DefaultUiScenes))
         {
-            DestroySelf();
+            targetClip = AudioService.LoadClip(AudioPaths.MenuBgm);
+        }
+        else if (SceneExistsInList(sceneName, gameplaySceneNames, DefaultGameplayScenes))
+        {
+            targetClip = AudioService.LoadClip(AudioPaths.GameplayBgm);
+        }
+
+        if (targetClip == null)
+        {
+            audioSource.Stop();
+            audioSource.clip = null;
+            return;
+        }
+
+        if (audioSource.clip != targetClip)
+        {
+            audioSource.clip = targetClip;
+        }
+
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
         }
     }
 
-    private bool IsSceneAllowed(string sceneName)
+    private static bool SceneExistsInList(string sceneName, string[] configuredScenes, string[] fallbackScenes)
     {
-        string[] scenesToCheck = allowedSceneNames;
+        string[] scenesToCheck = configuredScenes;
         if (scenesToCheck == null || scenesToCheck.Length == 0)
         {
-            scenesToCheck = DefaultAllowedScenes;
+            scenesToCheck = fallbackScenes;
         }
 
         for (int i = 0; i < scenesToCheck.Length; i++)
@@ -95,15 +140,5 @@ public class PersistentBackgroundMusic : MonoBehaviour
         }
 
         return false;
-    }
-
-    private void DestroySelf()
-    {
-        if (instance == this)
-        {
-            instance = null;
-        }
-
-        Destroy(gameObject);
     }
 }

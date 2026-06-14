@@ -171,6 +171,7 @@ public class GameOverPanel : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
         Debug.Log("GameOverPanel: Restart scene " + currentSceneName);
 
+        AudioService.PlayButtonClick();
         Time.timeScale = 1f;
         SceneManager.LoadScene(currentSceneName);
     }
@@ -184,6 +185,7 @@ public class GameOverPanel : MonoBehaviour
 
         if (startGame != null)
         {
+            AudioService.PlayBackClose();
             startGame.LoadMainMenu();
             return;
         }

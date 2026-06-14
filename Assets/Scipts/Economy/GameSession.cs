@@ -147,6 +147,7 @@ public class GameSession : MonoBehaviour
         SaveHighScoreIfNeeded();
 
         Debug.Log("Game Over: Het fuel. Tổng vàng hiện có: " + totalCoins);
+        AudioService.PlayClip(AudioPaths.GameOver, 1f);
         NotifyGameOverPanel();
 
     }

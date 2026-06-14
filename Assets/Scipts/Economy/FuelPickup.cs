@@ -6,6 +6,9 @@ public class FuelPickup : MonoBehaviour
     public float minFuelAmount = 15f;
     public float maxFuelAmount = 35f;
 
+    [Header("Audio")]
+    [SerializeField] [Range(0f, 1f)] private float pickupVolume = 1f;
+
     private float fuelAmount;
     private GameSession gameSession;
 
@@ -39,6 +42,7 @@ public class FuelPickup : MonoBehaviour
         }
 
         gameSession.AddFuel(fuelAmount);
+        AudioService.PlayClip(AudioPaths.FuelPickup, pickupVolume);
         Debug.Log("FuelPickup: Player nhat " + fuelAmount.ToString("F1") + " fuel.");
         Destroy(gameObject);
     }

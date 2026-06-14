@@ -54,6 +54,7 @@ public class GaragePlaceholderController : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1f;
+        AudioService.PlayBackClose();
         SceneManager.LoadScene(MenuSceneName);
     }
 
@@ -144,11 +145,13 @@ public class GaragePlaceholderController : MonoBehaviour
 
         if (!SaveSystem.IsVehicleUnlocked(vehicleId))
         {
+            AudioService.PlayErrorNotEnoughCoin();
             Debug.Log("Garage: " + displayName + " is locked. Spin to unlock.");
             return;
         }
 
         SaveSystem.SaveSelectedVehicle(vehicleId);
+        AudioService.PlayButtonClick();
         Debug.Log("Garage: selected " + displayName + " | vehicleId=" + vehicleId);
         RefreshGarage();
     }
