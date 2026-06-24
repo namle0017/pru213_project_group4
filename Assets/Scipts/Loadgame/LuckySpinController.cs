@@ -300,7 +300,7 @@ public class LuckySpinController : MonoBehaviour
                 if (!SaveSystem.IsVehicleUnlocked(F1VehicleId))
                 {
                     SaveSystem.SaveVehicleUnlocked(F1VehicleId, true);
-                    AudioService.PlayUnlockSuccess();
+                    // Fixed: removed duplicate PlayUnlockSuccess() — jackpot sound is sufficient
                     PlayJackpotSound();
                     ShowResultPopup("JACKPOT!", "F1 CAR UNLOCKED!", PopupRewardVisual.F1, true);
                 }
