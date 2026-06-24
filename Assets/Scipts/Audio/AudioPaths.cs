@@ -3,11 +3,12 @@ public static class AudioPaths
     public const string MenuBgm = "Audio/BGM/menu_bgm/hill_climb_racing";
     public const string GameplayBgm = "Audio/BGM/gameplay_bgm/hill_climb_racing_soundmap";
 
-    public const string ButtonClick = "Audio/UI_Sounds/button_click.wav";
-    public const string BackClose = "Audio/UI_Sounds/back_close.wav";
-    public const string ErrorNotEnoughCoin = "Audio/UI_Sounds/error_not_enough_coin.wav";
-    public const string BuySuccess = "Audio/UI_Sounds/buy_success.wav";
-    public const string UnlockSuccess = "Audio/UI_Sounds/unlock_success.wav";
+    // Note: Resources.Load does NOT use file extensions in the path
+    public const string ButtonClick = "Audio/UI_Sounds/button_click";
+    public const string BackClose = "Audio/UI_Sounds/back_close";
+    public const string ErrorNotEnoughCoin = "Audio/UI_Sounds/error_not_enough_coin";
+    public const string BuySuccess = "Audio/UI_Sounds/buy_success";
+    public const string UnlockSuccess = "Audio/UI_Sounds/unlock_success";
 
     public const string CoinPickup = "Audio/Gameplay_SFX/coin_pickup";
     public const string FuelPickup = "Audio/Gameplay_SFX/fuel_pickup";
