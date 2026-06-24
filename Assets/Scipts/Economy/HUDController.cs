@@ -23,7 +23,7 @@ public class HUDController : MonoBehaviour
     {
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
         }
 
         if (gameSession == null)
@@ -42,7 +42,7 @@ public class HUDController : MonoBehaviour
             if (_gameSessionSearchRetries > 120) return;
 
             _gameSessionSearchRetries++;
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
 
             if (gameSession == null) return;
 
