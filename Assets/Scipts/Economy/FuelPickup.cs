@@ -32,7 +32,7 @@ public class FuelPickup : MonoBehaviour
 
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
         }
 
         if (gameSession == null)

@@ -24,9 +24,8 @@ public class GaragePlaceholderController : MonoBehaviour
 
     [Header("Labels")]
     [SerializeField] private string lockedText = "LOCKED";
-    [SerializeField] private string lockedHintText = "SPIN TO UNLOCK";
-    [SerializeField] private string selectText = "SELECT";
-    [SerializeField] private string selectedText = "IN USE";
+
+
 
     [Header("Colors")]
     [SerializeField] private Color grayscaleColor = new Color(0.45f, 0.45f, 0.45f, 1f);
@@ -208,7 +207,7 @@ public class GaragePlaceholderController : MonoBehaviour
             return;
         }
 
-        Canvas canvas = FindFirstObjectByType<Canvas>();
+        Canvas canvas = FindAnyObjectByType<Canvas>(FindObjectsInactive.Exclude);
         if (canvas == null)
         {
             return;

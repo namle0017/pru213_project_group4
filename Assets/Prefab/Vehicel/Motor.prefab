@@ -1233,7 +1233,7 @@ MonoBehaviour:
   _backTireRB: {fileID: 1101419279124583404}
   _carRb: {fileID: 2550208036202977722}
   _speed: 160
-  _rotationSpeed: 380
+  _rotationSpeed: 200
   _reverseSpeedMultiplier: 0.45
   _coastDecelRate: 3.2
   _activeBrakeDecelRate: 13
