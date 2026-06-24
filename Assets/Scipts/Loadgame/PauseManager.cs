@@ -16,6 +16,7 @@ public class PauseManager : MonoBehaviour
     private Button restartButtonComponent;
     private Button mainMenuButtonComponent;
     private bool isPaused;
+    private bool _buttonsBound;
 
     private void Awake()
     {
@@ -34,8 +35,16 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
-        EnsureReferences();
-        EnsureButtonBindings();
+        // Only re-run setup if references or bindings are missing (avoids per-frame overhead)
+        if (gameSession == null || pausePanel == null || pauseButton == null)
+        {
+            EnsureReferences();
+        }
+
+        if (!_buttonsBound)
+        {
+            EnsureButtonBindings();
+        }
 
         if (gameSession != null && gameSession.IsGameOver)
         {
@@ -137,10 +146,17 @@ public class PauseManager : MonoBehaviour
 
     private void EnsureButtonBindings()
     {
+        if (pauseOpenButtonComponent == null || resumeButtonComponent == null ||
+            restartButtonComponent == null || mainMenuButtonComponent == null)
+        {
+            return;
+        }
+
         BindButton(pauseOpenButtonComponent, PauseGame);
         BindButton(resumeButtonComponent, ResumeGame);
         BindButton(restartButtonComponent, RestartGame);
         BindButton(mainMenuButtonComponent, LoadMainMenu);
+        _buttonsBound = true;
     }
 
     private static void BindButton(Button button, UnityEngine.Events.UnityAction action)

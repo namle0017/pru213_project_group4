@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
@@ -53,6 +54,8 @@ public class GameSession : MonoBehaviour
 
     private void Start()
     {
+        // Auto-derive per-map high score key from scene name so each map tracks its own best run
+        highScoreKey = "HighScore_" + SceneManager.GetActiveScene().name;
         highScore = SaveSystem.LoadHighScore(highScoreKey);
         totalCoins = SaveSystem.LoadTotalCoins();
 
