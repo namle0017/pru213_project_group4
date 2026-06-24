@@ -120,7 +120,7 @@ public class PauseManager : MonoBehaviour
 
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
         }
 
         if (pauseOpenButtonComponent == null && pauseButton != null)
@@ -206,7 +206,7 @@ public class PauseManager : MonoBehaviour
 
     private static void EnsureEventSystemExists()
     {
-        if (FindFirstObjectByType<EventSystem>() != null)
+        if (FindAnyObjectByType<EventSystem>(FindObjectsInactive.Exclude) != null)
         {
             return;
         }

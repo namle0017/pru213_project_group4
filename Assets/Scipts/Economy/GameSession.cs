@@ -241,7 +241,7 @@ public class GameSession : MonoBehaviour
 
     private void NotifyGameOverPanel()
     {
-        GameOverPanel panel = FindFirstObjectByType<GameOverPanel>();
+        GameOverPanel panel = FindAnyObjectByType<GameOverPanel>(FindObjectsInactive.Exclude);
 
         if (panel == null)
         {
