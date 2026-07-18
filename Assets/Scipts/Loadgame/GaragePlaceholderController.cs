@@ -25,6 +25,9 @@ public class GaragePlaceholderController : MonoBehaviour
     [Header("Labels")]
     [SerializeField] private string lockedText = "LOCKED";
 
+    [Header("Upgrade System Reference")]
+    [SerializeField] private VehicleUpgradeUI upgradeUI;
+
 
 
     [Header("Colors")]
@@ -43,6 +46,10 @@ public class GaragePlaceholderController : MonoBehaviour
     {
         ApplyTestUnlocks();
         RefreshGarage();
+        if (upgradeUI != null)
+        {
+            upgradeUI.gameObject.SetActive(false);
+        }
     }
 
     private void OnValidate()
@@ -155,6 +162,38 @@ public class GaragePlaceholderController : MonoBehaviour
         RefreshGarage();
     }
 
+    private void HandlePreviewClicked(string vehicleId, string displayName)
+    {
+        Debug.Log($"Garage: HandlePreviewClicked called for {displayName} ({vehicleId})");
+        if (!Application.isPlaying) return;
+
+        if (!SaveSystem.IsVehicleUnlocked(vehicleId))
+        {
+            AudioService.PlayErrorNotEnoughCoin();
+            Debug.Log("Garage: Preview clicked, but " + displayName + " is locked.");
+            return;
+        }
+
+        if (upgradeUI != null)
+        {
+            bool isAlreadySelected = SaveSystem.LoadSelectedVehicle() == vehicleId;
+            bool isPanelActive = upgradeUI.gameObject.activeSelf;
+
+            if (isAlreadySelected && isPanelActive)
+            {
+                upgradeUI.gameObject.SetActive(false);
+                AudioService.PlayButtonClick();
+            }
+            else
+            {
+                SaveSystem.SaveSelectedVehicle(vehicleId);
+                RefreshGarage();
+                upgradeUI.gameObject.SetActive(true);
+                AudioService.PlayButtonClick();
+            }
+        }
+    }
+
     private void ApplyTestUnlocks()
     {
         if (!Application.isPlaying)
@@ -175,7 +214,7 @@ public class GaragePlaceholderController : MonoBehaviour
         }
     }
 
-    private void RefreshGarage()
+    public void RefreshGarage()
     {
         if (!isActiveAndEnabled)
         {
@@ -188,6 +227,11 @@ public class GaragePlaceholderController : MonoBehaviour
         ConfigureCard("GroundCard", VehicleIds.BasicCar, "BASIC CAR", basicCarPreviewSprite);
         ConfigureCard("F1_Car", VehicleIds.F1Car, "F1 CAR", f1CarPreviewSprite);
         ConfigureCard("Motor", VehicleIds.Motor, "MOTOR", motorPreviewSprite);
+
+        if (upgradeUI != null)
+        {
+            upgradeUI.RefreshUI();
+        }
     }
 
     private void HideLogo()
@@ -312,6 +356,16 @@ public class GaragePlaceholderController : MonoBehaviour
             }
         }
 
+        Button previewButton = previewTransform != null ? previewTransform.GetComponent<Button>() : null;
+        if (previewButton != null)
+        {
+            if (Application.isPlaying)
+            {
+                previewButton.onClick.RemoveAllListeners();
+                previewButton.onClick.AddListener(() => HandlePreviewClicked(vehicleId, displayName));
+            }
+        }
+
         if (actionButtonImage != null)
         {
             actionButtonImage.enabled = true;
@@ -370,7 +424,7 @@ public class GaragePlaceholderController : MonoBehaviour
         }
 
         Debug.Log(
-            $"Garage: {displayName} | unlocked={isUnlocked} | selected={isSelected} | buttonFound={(actionButton != null)} | previewFound={(previewImage != null)}");
+            $"Garage: {displayName} | unlocked={isUnlocked} | selected={isSelected} | buttonFound={(actionButton != null)} | previewFound={(previewImage != null)} | previewButtonFound={(previewButton != null)}");
     }
 
     private static TextMeshProUGUI GetTmpByPrefix(Transform parent, string childPrefix)

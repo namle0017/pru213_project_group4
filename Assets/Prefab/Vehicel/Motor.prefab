@@ -1263,6 +1263,7 @@ MonoBehaviour:
   _reverseSpeedMultiplier: 0.45
   _coastDecelRate: 3.2
   _activeBrakeDecelRate: 13
+  _vehicleId: motor
 --- !u!114 &604100000000000101
 MonoBehaviour:
   m_ObjectHideFlags: 0

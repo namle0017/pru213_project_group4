@@ -34,6 +34,37 @@ public class VehicelControl : MonoBehaviour
     [Tooltip("Tốc độ hãm khi NHẤN phanh/đổi chiều đột ngột (phanh gấp)")]
     [SerializeField] private float _activeBrakeDecelRate = 12f;
 
+    [Header("Upgrade Settings")]
+    [SerializeField] private string _vehicleId = "basic_car";
+
+    private float _tireTorqueMultiplier = 1f;
+
+    private void Start()
+    {
+        ApplyUpgrades();
+    }
+
+    private void ApplyUpgrades()
+    {
+        // 1. ENGINE UPGRADE
+        int engineLevel = SaveSystem.GetUpgradeLevel(_vehicleId, "Engine");
+        _speed = _speed * (1f + (engineLevel - 1) * 0.15f);
+
+        // 2. TIRES UPGRADE
+        int tiresLevel = SaveSystem.GetUpgradeLevel(_vehicleId, "Tires");
+        _tireTorqueMultiplier = 1f + (tiresLevel - 1) * 0.15f;
+
+        // 3. SUSPENSION UPGRADE
+        int suspensionLevel = SaveSystem.GetUpgradeLevel(_vehicleId, "Suspension");
+        WheelJoint2D[] joints = GetComponentsInChildren<WheelJoint2D>();
+        foreach (WheelJoint2D joint in joints)
+        {
+            JointSuspension2D suspension = joint.suspension;
+            suspension.frequency = suspension.frequency + (suspensionLevel - 1) * 1.5f;
+            joint.suspension = suspension;
+        }
+    }
+
     private float _moveInput;
     private bool _isCoasting;
 
@@ -138,8 +169,8 @@ public class VehicelControl : MonoBehaviour
                     currentSpeed *= _reverseSpeedMultiplier;
                 }
 
-                _frontTireRB.AddTorque(-_moveInput * currentSpeed * Time.fixedDeltaTime);
-                _backTireRB.AddTorque(-_moveInput * currentSpeed * Time.fixedDeltaTime);
+                _frontTireRB.AddTorque(-_moveInput * currentSpeed * _tireTorqueMultiplier * Time.fixedDeltaTime);
+                _backTireRB.AddTorque(-_moveInput * currentSpeed * _tireTorqueMultiplier * Time.fixedDeltaTime);
                 _carRb.AddTorque(-_moveInput * _rotationSpeed * Time.fixedDeltaTime);
             }
         }

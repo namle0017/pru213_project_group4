@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -59,7 +59,12 @@ public class GameSession : MonoBehaviour
         highScore = SaveSystem.LoadHighScore(highScoreKey);
         totalCoins = SaveSystem.LoadTotalCoins();
 
-        currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel);
+        // ÁP DỤNG NÂNG CẤP BÌNH XĂNG (FUEL TANK UPGRADE)
+        string selectedVehicleId = SaveSystem.LoadSelectedVehicle();
+        int fuelLevel = SaveSystem.GetUpgradeLevel(selectedVehicleId, "Fuel");
+        maxFuel = maxFuel + (fuelLevel - 1) * 15f; // Cộng thêm 15 đơn vị nhiên liệu mỗi cấp
+
+        currentFuel = maxFuel;
         CacheStartPosition();
         CachePlayerComponents();
     }
