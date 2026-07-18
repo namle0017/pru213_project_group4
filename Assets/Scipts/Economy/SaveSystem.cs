@@ -147,4 +147,33 @@ public static class SaveSystem
     {
         return "VehicleUnlocked_" + vehicleId;
     }
+
+    // ================= UPGRADE SYSTEM =================
+    public static int GetUpgradeLevel(string vehicleId, string upgradeType)
+    {
+        if (string.IsNullOrWhiteSpace(vehicleId) || string.IsNullOrWhiteSpace(upgradeType))
+        {
+            return 1;
+        }
+        return PlayerPrefs.GetInt("Upgrade_" + vehicleId + "_" + upgradeType, 1);
+    }
+
+    public static void SaveUpgradeLevel(string vehicleId, string upgradeType, int level)
+    {
+        if (string.IsNullOrWhiteSpace(vehicleId) || string.IsNullOrWhiteSpace(upgradeType))
+        {
+            return;
+        }
+        PlayerPrefs.SetInt("Upgrade_" + vehicleId + "_" + upgradeType, Mathf.Clamp(level, 1, 5));
+        PlayerPrefs.Save();
+    }
+
+    public static int GetUpgradeCost(int currentLevel)
+    {
+        if (currentLevel >= 5)
+        {
+            return 0; // Max level reached
+        }
+        return 5500; // Giá cố định 5500 xu để khớp với ảnh nút bấm của bạn
+    }
 }
