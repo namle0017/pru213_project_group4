@@ -9,6 +9,10 @@ public class VehicelControl : MonoBehaviour
     [SerializeField] private float _speed = 150f;
     [SerializeField] private float _rotationSpeed = 300f;
 
+    [Header("Effects")]
+    [Tooltip("Hệ thống Particle tạo khói xe")]
+    [SerializeField] private ParticleSystem _exhaustSmoke;
+
     [Header("Speed Multipliers")]
     [Tooltip("Tỷ lệ tốc độ khi đi lùi (nhỏ hơn 1 sẽ giúp lùi lại từ từ)")]
     [SerializeField] private float _reverseSpeedMultiplier = 0.5f;
@@ -47,6 +51,27 @@ public class VehicelControl : MonoBehaviour
             _moveInput = 0f;
             _isCoasting = true;
         }
+        // --- XỬ LÝ HIỆU ỨNG KHÓI ---
+        if (_exhaustSmoke != null)
+        {
+            // Bật khói khi xe đang đạp ga tiến hoặc lùi (không phải đang trôi tự do)
+            if (!_isCoasting)
+            {
+                if (!_exhaustSmoke.isPlaying)
+                {
+                    _exhaustSmoke.Play();
+                }
+            }
+            // Tắt khói khi thả ga
+            else
+            {
+                if (_exhaustSmoke.isPlaying)
+                {
+                    _exhaustSmoke.Stop();
+                }
+            }
+        }
+
     }
 
 
