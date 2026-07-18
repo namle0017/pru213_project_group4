@@ -13,6 +13,16 @@ public class VehicelControl : MonoBehaviour
     [Tooltip("Hệ thống Particle tạo khói xe")]
     [SerializeField] private ParticleSystem _exhaustSmoke;
 
+    [Header("Engine Audio Settings")]
+    [Tooltip("Component Audio Source phát tiếng động cơ")]
+    [SerializeField] private AudioSource _engineAudioSource;
+    [Tooltip("Độ cao âm thanh tối thiểu (khi xe đứng yên)")]
+    [SerializeField] private float _minPitch = 0.8f;
+    [Tooltip("Độ cao âm thanh tối đa (khi xe chạy cực đại)")]
+    [SerializeField] private float _maxPitch = 2.2f;
+    [Tooltip("Tốc độ xe tương ứng với mức Pitch tối đa")]
+    [SerializeField] private float _maxSpeedForPitch = 20f;
+
     [Header("Speed Multipliers")]
     [Tooltip("Tỷ lệ tốc độ khi đi lùi (nhỏ hơn 1 sẽ giúp lùi lại từ từ)")]
     [SerializeField] private float _reverseSpeedMultiplier = 0.5f;
@@ -71,6 +81,24 @@ public class VehicelControl : MonoBehaviour
                 }
             }
         }
+
+        // --- XỬ LÝ ÂM THANH ĐỘNG CƠ ---
+        if (_engineAudioSource != null && _carRb != null)
+        {
+            // Lấy tốc độ thực tế của xe (độ dài vector vận tốc 2D)
+            float currentSpeed = _carRb.linearVelocity.magnitude;
+
+            // Quy đổi tốc độ từ khoảng 0 -> _maxSpeedForPitch sang tỉ lệ 0 -> 1
+            float speedRatio = Mathf.Clamp01(currentSpeed / _maxSpeedForPitch);
+
+            // Tính toán Pitch tương ứng từ _minPitch đến _maxPitch dựa trên tỉ lệ tốc độ
+            float targetPitch = Mathf.Lerp(_minPitch, _maxPitch, speedRatio);
+
+            // Cập nhật độ cao âm thanh cho Audio Source
+            _engineAudioSource.pitch = targetPitch;
+        }
+
+
 
     }
 

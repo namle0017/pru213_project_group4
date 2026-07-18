@@ -1128,6 +1128,7 @@ GameObject:
   - component: {fileID: 5929105237037863908}
   - component: {fileID: 773500060726475972}
   - component: {fileID: 604100000000000101}
+  - component: {fileID: 4053611756154044824}
   m_Layer: 0
   m_Name: Motor
   m_TagString: Untagged
@@ -1255,6 +1256,10 @@ MonoBehaviour:
   _speed: 160
   _rotationSpeed: 200
   _exhaustSmoke: {fileID: 0}
+  _engineAudioSource: {fileID: 4053611756154044824}
+  _minPitch: 1
+  _maxPitch: 2
+  _maxSpeedForPitch: 15
   _reverseSpeedMultiplier: 0.45
   _coastDecelRate: 3.2
   _activeBrakeDecelRate: 13
@@ -1284,6 +1289,103 @@ MonoBehaviour:
   _shoeAmplitude: 14
   _frontLegPhaseOffset: 3.1415927
   _shoePhaseOffset: 1.9
+--- !u!82 &4053611756154044824
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207567143010157627}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 6e9326681c9c53e4cb63962ba6a11782, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.245
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8570879245980179386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,7 +1561,7 @@ PolygonCollider2D:
       - {x: -0.17, y: -0.35239914}
       - {x: 0.14, y: -0.35499996}
       - {x: 0.35847276, y: -0.3017492}
-      - {x: 0.29999998, y: -0.505}
+      - {x: 0.367389, y: -0.32304975}
       - {x: 0.39999998, y: -0.295}
       - {x: 0.42999998, y: -0.285}
   m_UseDelaunayMesh: 1
