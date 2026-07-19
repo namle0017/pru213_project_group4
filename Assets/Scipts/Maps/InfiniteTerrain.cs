@@ -128,7 +128,12 @@ public class InfiniteTerrain : MonoBehaviour
         }
 
         float frontEdge = player.position.x + chunksAhead * _chunkWidth;
-        while (_nextChunkStartX < frontEdge)
+
+        // ponytail: cap chunk/frame. Cursor luon tien (xem SpawnChunk) nen khong the
+        // freeze, nhung cap chan spawn dot-bien khi player teleport/di rat nhanh.
+        // Neu can nhieu hon, tang chunksAhead.
+        int spawnBudget = chunksBehind + 1 + chunksAhead + 4;
+        while (_nextChunkStartX < frontEdge && spawnBudget-- > 0)
             SpawnChunk();
 
         float destroyBefore = player.position.x - chunksBehind * _chunkWidth;
@@ -154,7 +159,17 @@ public class InfiniteTerrain : MonoBehaviour
 
     private void SpawnChunk()
     {
-        float startX = _nextChunkStartX;
+        float startX          = _nextChunkStartX;
+        float chunkNoiseOffset = _noiseOffset;
+
+        // ── NGUYEN NHAN COC LOI CU ──────────────────────────────────────
+        // Truoc day cursor (_nextChunkStartX) chi tang khi build thanh cong.
+        // 1 chunk build loi (SSC null / SpriteShape exception) -> cursor dung ->
+        // while-loop trong Update khong tien -> terrain ngung moc -> map huu han.
+        // Fix: TANG CURSOR TRUOC. Chunk loi chi bi skip (toi da 1 gap), khong bao
+        // gio lam chet ca he. Log ben duoi chi dich danh map/chunk neu con loi.
+        _noiseOffset     += (pointsPerChunk - 1) * noiseStep;
+        _nextChunkStartX += _chunkWidth;
 
         // Spawn tại gốc tọa độ (0,0), spline dùng world position trực tiếp
         var go = Instantiate(chunkPrefab,
@@ -166,23 +181,28 @@ public class InfiniteTerrain : MonoBehaviour
         var ssc = go.GetComponent<SpriteShapeController>();
         if (ssc == null)
         {
-            Debug.LogError("InfiniteTerrain: chunkPrefab thieu SpriteShapeController.");
+            Debug.LogError($"InfiniteTerrain[{gameObject.scene.name}]: chunkPrefab '{chunkPrefab.name}' thieu SpriteShapeController tren root. Skip chunk tai X={startX:F1}.");
             Destroy(go);
             return;
         }
 
-        BuildSpline(ssc, startX, _noiseOffset);
+        try
+        {
+            BuildSpline(ssc, startX, chunkNoiseOffset);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"InfiniteTerrain[{gameObject.scene.name}]: BuildSpline loi tai chunk X={startX:F1} noiseOff={chunkNoiseOffset:F2} (prefab '{chunkPrefab.name}'): {ex}. Skip chunk.");
+            Destroy(go);
+            return;
+        }
+
         _chunks.Enqueue(new ChunkInfo
         {
             chunkObject = go,
             startX = startX,
             endX = startX + _chunkWidth
         });
-
-        _noiseOffset     += (pointsPerChunk - 1) * noiseStep;
-        _nextChunkStartX += _chunkWidth;
-
-        Debug.Log($"InfiniteTerrain: Spawned {go.name} at X={startX:F1}, noiseOff={_noiseOffset:F2}");
     }
 
     private void TryInitializeTerrain()
