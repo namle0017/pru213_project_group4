@@ -21,6 +21,8 @@ public class WheelDustController : MonoBehaviour
     
     private bool isTouchingGround = false;
 
+    public bool IsTouchingGround => isTouchingGround;
+
     private void Start()
     {
         // Tự động tìm ParticleSystem nằm bên trong bánh xe này (kể cả nó là object con)
