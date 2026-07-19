@@ -1,17 +1,18 @@
 using UnityEngine;
-
 public class CoinPickup : MonoBehaviour
 {
     [Header("Coin Value Range")]
     public int minCoinValue = 3;
     public int maxCoinValue = 5;
 
+    [Header("Audio")]
+    [SerializeField] [Range(0f, 1f)] private float pickupVolume = 1f;
+
     private int coinValue;
     private GameSession gameSession;
 
     private void Awake()
     {
-        // Random so coin khi object duoc tao ra (inclusive ca 2 dau)
         coinValue = Random.Range(minCoinValue, maxCoinValue + 1);
         Debug.Log("CoinPickup: Spawn voi " + coinValue + " coin.");
     }
@@ -29,7 +30,7 @@ public class CoinPickup : MonoBehaviour
 
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
         }
 
         if (gameSession == null)
@@ -39,7 +40,13 @@ public class CoinPickup : MonoBehaviour
         }
 
         gameSession.AddCoin(coinValue);
+        PlayPickupSound();
         Debug.Log("CoinPickup: Player nhat " + coinValue + " coin.");
         Destroy(gameObject);
+    }
+
+    private void PlayPickupSound()
+    {
+        AudioService.PlayClip(AudioPaths.CoinPickup, pickupVolume);
     }
 }

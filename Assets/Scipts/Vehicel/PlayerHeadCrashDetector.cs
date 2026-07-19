@@ -30,6 +30,7 @@ public class PlayerHeadCrashDetector : MonoBehaviour
             Debug.Log("PlayerHeadCrashDetector: Player_head cham terrain -> Game Over.");
         }
 
+        AudioService.PlayClip(AudioPaths.HeadHit, 1f);
         gameSession.GameOver();
     }
 
@@ -37,7 +38,7 @@ public class PlayerHeadCrashDetector : MonoBehaviour
     {
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
         }
     }
 

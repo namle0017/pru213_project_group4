@@ -23,14 +23,14 @@ public class MapCardUI : MonoBehaviour
     [SerializeField] private Sprite playSprite;
     [SerializeField] private Sprite buySprite;
 
-    private MapSelectController controller;
+    private MonoBehaviour controller;
 
     public string MapId => mapId;
     public string SceneName => sceneName;
     public int Cost => cost;
     public GameObject CardRoot => cardRoot != null ? cardRoot : gameObject;
 
-    public void Setup(MapSelectController owner, string newMapId, string newSceneName, int newCost, string displayName)
+    public void Setup(MonoBehaviour owner, string newMapId, string newSceneName, int newCost, string displayName)
     {
         controller = owner;
         mapId = newMapId;
@@ -95,6 +95,24 @@ public class MapCardUI : MonoBehaviour
             return;
         }
 
-        controller.HandleMapCardAction(this);
+        if (controller is MapSelectController mapSelectController)
+        {
+            mapSelectController.HandleMapCardAction(this);
+            return;
+        }
+
+        if (controller is MapSelect2Controller mapSelect2Controller)
+        {
+            mapSelect2Controller.HandleMapCardAction(this);
+            return;
+        }
+
+        if (controller is MapSelect3Controller mapSelect3Controller)
+        {
+            mapSelect3Controller.HandleMapCardAction(this);
+            return;
+        }
+
+        Debug.LogWarning("MapCardUI: Controller khong ho tro HandleMapCardAction.");
     }
 }

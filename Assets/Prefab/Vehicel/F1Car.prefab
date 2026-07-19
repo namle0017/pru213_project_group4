@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5686906669503491595}
   - component: {fileID: 1101419279124583404}
   - component: {fileID: 6200786522846545637}
+  - component: {fileID: 8704781198497292816}
   m_Layer: 0
   m_Name: Back_tire_f1
   m_TagString: Untagged
@@ -31,7 +32,8 @@ Transform:
   m_LocalPosition: {x: -1.5363518, y: 0.78797984, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5332633820079222933}
   m_Father: {fileID: 7799624034639451612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5686906669503491595
@@ -156,6 +158,24 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.32
+--- !u!114 &8704781198497292816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331378339109475719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39425afa0ad0584cb2649d3fd3a2929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WheelDustController
+  minSpeedForDust: 50
+  speedEmissionMultiplier: 0.5
+  dirtColor: {r: 0.6, g: 0.4, b: 0.2, a: 0.5}
+  snowColor: {r: 1, g: 1, b: 1, a: 0.8}
+  marsColor: {r: 0.8, g: 0.3, b: 0.1, a: 0.6}
+  moonColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
 --- !u!1 &2889493154640974925
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +672,7 @@ GameObject:
   - component: {fileID: 4757508950905726368}
   - component: {fileID: 5929105237037863908}
   - component: {fileID: 773500060726475972}
+  - component: {fileID: -4172551878783036320}
   m_Layer: 0
   m_Name: F1Car
   m_TagString: Untagged
@@ -773,6 +794,112 @@ MonoBehaviour:
   _carRb: {fileID: 2550208036202977722}
   _speed: 150
   _rotationSpeed: 300
+  _exhaustSmoke: {fileID: 0}
+  _engineAudioSource: {fileID: -4172551878783036320}
+  _minPitch: 0.8
+  _maxPitch: 2.5
+  _maxSpeedForPitch: 30
+  _reverseSpeedMultiplier: 0.5
+  _coastDecelRate: 3
+  _activeBrakeDecelRate: 12
+  _vehicleId: f1_car
+--- !u!82 &-4172551878783036320
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207567143010157627}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 6e9326681c9c53e4cb63962ba6a11782, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.332
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8570879245980179386
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,3 +1067,65 @@ PolygonCollider2D:
       - {x: -0.675, y: -0.07}
       - {x: -0.675, y: -0.06}
   m_UseDelaunayMesh: 1
+--- !u!1001 &1293611750472479327
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6672156058030427445}
+    m_Modifications:
+    - target: {fileID: 151194800937462079, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_Name
+      value: WheelDust
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.138
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.374
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.166
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.88965297
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.11155229
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.4160885
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.1514731
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 4.154
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -50.912
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -21.303
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d1a9b2042386820478b51773504a9183, type: 3}
+--- !u!4 &5332633820079222933 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6625506694440977098, guid: d1a9b2042386820478b51773504a9183, type: 3}
+  m_PrefabInstance: {fileID: 1293611750472479327}
+  m_PrefabAsset: {fileID: 0}

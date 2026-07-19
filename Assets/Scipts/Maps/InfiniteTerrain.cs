@@ -5,6 +5,13 @@ using UnityEngine.U2D;
 
 public class InfiniteTerrain : MonoBehaviour
 {
+    private sealed class ChunkInfo
+    {
+        public GameObject chunkObject;
+        public float startX;
+        public float endX;
+    }
+
     [Header("References")]
     public GameObject chunkPrefab;
     public Transform player;
@@ -34,46 +41,38 @@ public class InfiniteTerrain : MonoBehaviour
     private float             _noiseOffset;
     private float             _nextChunkStartX;
     private float             _terrainStartX;
-    private Queue<GameObject> _chunks = new Queue<GameObject>();
+    private Queue<ChunkInfo>   _chunks = new Queue<ChunkInfo>();
+    private bool              _isInitialized;
+    private bool              _hasStarted;
+    private Coroutine         _dropCoroutine;
 
     // ─────────────────────────────────────────────────────────────────
 
     private void Start()
     {
-        if (player == null)
-        {
-            var p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) player = p.transform;
-            else { Debug.LogError("InfiniteTerrain: Khong tim thay tag 'Player'."); return; }
-        }
-
-        if (chunkPrefab == null)
-        {
-            Debug.LogError("InfiniteTerrain: Chua gan chunkPrefab.");
-            return;
-        }
-
-        _chunkWidth      = (pointsPerChunk - 1) * xStep;
-        _noiseOffset     = 0f;
-        _nextChunkStartX = player.position.x - playerStartOffset - chunksBehind * _chunkWidth;
-        _terrainStartX   = _nextChunkStartX;
-
-        int needed = chunksBehind + 1 + chunksAhead;
-        for (int i = 0; i < needed; i++)
-            SpawnChunk();
-
-        StartCoroutine(DropAfterColliderReady());
+        _hasStarted = true;
+        TryInitializeTerrain();
     }
 
     public void SetPlayer(Transform newPlayer)
     {
         player = newPlayer;
+
+        if (_hasStarted)
+        {
+            TryInitializeTerrain();
+        }
     }
 
     // ── Coroutine drop xe ─────────────────────────────────────────────
 
     private IEnumerator DropAfterColliderReady()
     {
+        if (player == null)
+        {
+            yield break;
+        }
+
         var rbs = player.GetComponentsInChildren<Rigidbody2D>();
         foreach (var rb in rbs)
         {
@@ -110,7 +109,23 @@ public class InfiniteTerrain : MonoBehaviour
 
     private void Update()
     {
-        if (player == null || chunkPrefab == null) return;
+        if (chunkPrefab == null)
+        {
+            return;
+        }
+
+        EnsurePlayerReference();
+
+        if (!_isInitialized)
+        {
+            TryInitializeTerrain();
+            return;
+        }
+
+        if (player == null)
+        {
+            return;
+        }
 
         float frontEdge = player.position.x + chunksAhead * _chunkWidth;
         while (_nextChunkStartX < frontEdge)
@@ -120,13 +135,16 @@ public class InfiniteTerrain : MonoBehaviour
         while (_chunks.Count > 0)
         {
             var oldest = _chunks.Peek();
-            if (oldest == null) { _chunks.Dequeue(); continue; }
-
-            float chunkEndX = oldest.transform.position.x + _chunkWidth;
-            if (chunkEndX < destroyBefore)
+            if (oldest == null || oldest.chunkObject == null)
             {
                 _chunks.Dequeue();
-                Destroy(oldest);
+                continue;
+            }
+
+            if (oldest.endX < destroyBefore)
+            {
+                _chunks.Dequeue();
+                Destroy(oldest.chunkObject);
             }
             else break;
         }
@@ -154,12 +172,75 @@ public class InfiniteTerrain : MonoBehaviour
         }
 
         BuildSpline(ssc, startX, _noiseOffset);
-        _chunks.Enqueue(go);
+        _chunks.Enqueue(new ChunkInfo
+        {
+            chunkObject = go,
+            startX = startX,
+            endX = startX + _chunkWidth
+        });
 
         _noiseOffset     += (pointsPerChunk - 1) * noiseStep;
         _nextChunkStartX += _chunkWidth;
 
         Debug.Log($"InfiniteTerrain: Spawned {go.name} at X={startX:F1}, noiseOff={_noiseOffset:F2}");
+    }
+
+    private void TryInitializeTerrain()
+    {
+        if (_isInitialized)
+        {
+            return;
+        }
+
+        EnsurePlayerReference();
+
+        if (player == null)
+        {
+            Debug.LogWarning("InfiniteTerrain: Chua tim thay player hop le de khoi tao terrain.");
+            return;
+        }
+
+        if (chunkPrefab == null)
+        {
+            Debug.LogError("InfiniteTerrain: Chua gan chunkPrefab.");
+            return;
+        }
+
+        _chunkWidth      = (pointsPerChunk - 1) * xStep;
+        _noiseOffset     = 0f;
+        _nextChunkStartX = player.position.x - playerStartOffset - chunksBehind * _chunkWidth;
+        _terrainStartX   = _nextChunkStartX;
+
+        int needed = chunksBehind + 1 + chunksAhead;
+        for (int i = 0; i < needed; i++)
+        {
+            SpawnChunk();
+        }
+
+        _isInitialized = true;
+
+        if (_dropCoroutine != null)
+        {
+            StopCoroutine(_dropCoroutine);
+        }
+
+        _dropCoroutine = StartCoroutine(DropAfterColliderReady());
+
+        Debug.Log("InfiniteTerrain: Initialized with player " + player.name + " at X=" + player.position.x.ToString("F1"));
+    }
+
+    private void EnsurePlayerReference()
+    {
+        if (player != null && player.gameObject != null && player.gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
+        GameObject taggedPlayer = GameObject.FindGameObjectWithTag("Player");
+        if (taggedPlayer != null)
+        {
+            player = taggedPlayer.transform;
+        }
     }
 
     // ── Build spline ──────────────────────────────────────────────────

@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
@@ -53,10 +54,17 @@ public class GameSession : MonoBehaviour
 
     private void Start()
     {
+        // Auto-derive per-map high score key from scene name so each map tracks its own best run
+        highScoreKey = "HighScore_" + SceneManager.GetActiveScene().name;
         highScore = SaveSystem.LoadHighScore(highScoreKey);
         totalCoins = SaveSystem.LoadTotalCoins();
 
-        currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel);
+        // ÁP DỤNG NÂNG CẤP BÌNH XĂNG (FUEL TANK UPGRADE)
+        string selectedVehicleId = SaveSystem.LoadSelectedVehicle();
+        int fuelLevel = SaveSystem.GetUpgradeLevel(selectedVehicleId, "Fuel");
+        maxFuel = maxFuel + (fuelLevel - 1) * 15f; // Cộng thêm 15 đơn vị nhiên liệu mỗi cấp
+
+        currentFuel = maxFuel;
         CacheStartPosition();
         CachePlayerComponents();
     }
@@ -147,6 +155,7 @@ public class GameSession : MonoBehaviour
         SaveHighScoreIfNeeded();
 
         Debug.Log("Game Over: Het fuel. Tổng vàng hiện có: " + totalCoins);
+        AudioService.PlayClip(AudioPaths.GameOver, 1f);
         NotifyGameOverPanel();
 
     }
@@ -237,7 +246,7 @@ public class GameSession : MonoBehaviour
 
     private void NotifyGameOverPanel()
     {
-        GameOverPanel panel = FindFirstObjectByType<GameOverPanel>();
+        GameOverPanel panel = FindAnyObjectByType<GameOverPanel>(FindObjectsInactive.Exclude);
 
         if (panel == null)
         {

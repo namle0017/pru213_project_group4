@@ -9,6 +9,20 @@ public class VehicelControl : MonoBehaviour
     [SerializeField] private float _speed = 150f;
     [SerializeField] private float _rotationSpeed = 300f;
 
+    [Header("Effects")]
+    [Tooltip("Hệ thống Particle tạo khói xe")]
+    [SerializeField] private ParticleSystem _exhaustSmoke;
+
+    [Header("Engine Audio Settings")]
+    [Tooltip("Component Audio Source phát tiếng động cơ")]
+    [SerializeField] private AudioSource _engineAudioSource;
+    [Tooltip("Độ cao âm thanh tối thiểu (khi xe đứng yên)")]
+    [SerializeField] private float _minPitch = 0.8f;
+    [Tooltip("Độ cao âm thanh tối đa (khi xe chạy cực đại)")]
+    [SerializeField] private float _maxPitch = 2.2f;
+    [Tooltip("Tốc độ xe tương ứng với mức Pitch tối đa")]
+    [SerializeField] private float _maxSpeedForPitch = 20f;
+
     [Header("Speed Multipliers")]
     [Tooltip("Tỷ lệ tốc độ khi đi lùi (nhỏ hơn 1 sẽ giúp lùi lại từ từ)")]
     [SerializeField] private float _reverseSpeedMultiplier = 0.5f;
@@ -19,6 +33,37 @@ public class VehicelControl : MonoBehaviour
 
     [Tooltip("Tốc độ hãm khi NHẤN phanh/đổi chiều đột ngột (phanh gấp)")]
     [SerializeField] private float _activeBrakeDecelRate = 12f;
+
+    [Header("Upgrade Settings")]
+    [SerializeField] private string _vehicleId = "basic_car";
+
+    private float _tireTorqueMultiplier = 1f;
+
+    private void Start()
+    {
+        ApplyUpgrades();
+    }
+
+    private void ApplyUpgrades()
+    {
+        // 1. ENGINE UPGRADE
+        int engineLevel = SaveSystem.GetUpgradeLevel(_vehicleId, "Engine");
+        _speed = _speed * (1f + (engineLevel - 1) * 0.15f);
+
+        // 2. TIRES UPGRADE
+        int tiresLevel = SaveSystem.GetUpgradeLevel(_vehicleId, "Tires");
+        _tireTorqueMultiplier = 1f + (tiresLevel - 1) * 0.15f;
+
+        // 3. SUSPENSION UPGRADE
+        int suspensionLevel = SaveSystem.GetUpgradeLevel(_vehicleId, "Suspension");
+        WheelJoint2D[] joints = GetComponentsInChildren<WheelJoint2D>();
+        foreach (WheelJoint2D joint in joints)
+        {
+            JointSuspension2D suspension = joint.suspension;
+            suspension.frequency = suspension.frequency + (suspensionLevel - 1) * 1.5f;
+            joint.suspension = suspension;
+        }
+    }
 
     private float _moveInput;
     private bool _isCoasting;
@@ -47,6 +92,45 @@ public class VehicelControl : MonoBehaviour
             _moveInput = 0f;
             _isCoasting = true;
         }
+        // --- XỬ LÝ HIỆU ỨNG KHÓI ---
+        if (_exhaustSmoke != null)
+        {
+            // Bật khói khi xe đang đạp ga tiến hoặc lùi (không phải đang trôi tự do)
+            if (!_isCoasting)
+            {
+                if (!_exhaustSmoke.isPlaying)
+                {
+                    _exhaustSmoke.Play();
+                }
+            }
+            // Tắt khói khi thả ga
+            else
+            {
+                if (_exhaustSmoke.isPlaying)
+                {
+                    _exhaustSmoke.Stop();
+                }
+            }
+        }
+
+        // --- XỬ LÝ ÂM THANH ĐỘNG CƠ ---
+        if (_engineAudioSource != null && _carRb != null)
+        {
+            // Lấy tốc độ thực tế của xe (độ dài vector vận tốc 2D)
+            float currentSpeed = _carRb.linearVelocity.magnitude;
+
+            // Quy đổi tốc độ từ khoảng 0 -> _maxSpeedForPitch sang tỉ lệ 0 -> 1
+            float speedRatio = Mathf.Clamp01(currentSpeed / _maxSpeedForPitch);
+
+            // Tính toán Pitch tương ứng từ _minPitch đến _maxPitch dựa trên tỉ lệ tốc độ
+            float targetPitch = Mathf.Lerp(_minPitch, _maxPitch, speedRatio);
+
+            // Cập nhật độ cao âm thanh cho Audio Source
+            _engineAudioSource.pitch = targetPitch;
+        }
+
+
+
     }
 
 
@@ -85,8 +169,8 @@ public class VehicelControl : MonoBehaviour
                     currentSpeed *= _reverseSpeedMultiplier;
                 }
 
-                _frontTireRB.AddTorque(-_moveInput * currentSpeed * Time.fixedDeltaTime);
-                _backTireRB.AddTorque(-_moveInput * currentSpeed * Time.fixedDeltaTime);
+                _frontTireRB.AddTorque(-_moveInput * currentSpeed * _tireTorqueMultiplier * Time.fixedDeltaTime);
+                _backTireRB.AddTorque(-_moveInput * currentSpeed * _tireTorqueMultiplier * Time.fixedDeltaTime);
                 _carRb.AddTorque(-_moveInput * _rotationSpeed * Time.fixedDeltaTime);
             }
         }

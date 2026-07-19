@@ -32,7 +32,14 @@ public class MapSelectController : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        AudioService.PlayBackClose();
         SceneManager.LoadScene("Menu");
+    }
+
+    public void LoadNextPage()
+    {
+        AudioService.PlayButtonClick();
+        SceneManager.LoadScene("LevelSelect2");
     }
 
     public void HandleMapCardAction(MapCardUI card)
@@ -44,17 +51,20 @@ public class MapSelectController : MonoBehaviour
 
         if (SaveSystem.IsMapUnlocked(card.MapId))
         {
+            AudioService.PlayButtonClick();
             SceneManager.LoadScene(card.SceneName);
             return;
         }
 
         if (!SaveSystem.SpendCoins(card.Cost))
         {
+            AudioService.PlayErrorNotEnoughCoin();
             Debug.LogWarning("Not enough coins to unlock " + card.MapId);
             return;
         }
 
         SaveSystem.UnlockMap(card.MapId);
+        AudioService.PlayBuySuccess();
         RefreshAll();
     }
 

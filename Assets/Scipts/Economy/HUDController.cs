@@ -6,6 +6,7 @@ public class HUDController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameSession gameSession;
+    private int _gameSessionSearchRetries;
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI totalCoinText;
     [SerializeField] private TextMeshProUGUI distanceText;
@@ -22,7 +23,12 @@ public class HUDController : MonoBehaviour
     {
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
+        }
+
+        if (gameSession == null)
+        {
+            Debug.LogWarning("HUDController: GameSession not found in Start — will retry in Update.");
         }
 
         UpdateHUD();
@@ -32,12 +38,15 @@ public class HUDController : MonoBehaviour
     {
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            // Fixed: retry for up to 120 frames (~2s), then stop to avoid per-frame overhead
+            if (_gameSessionSearchRetries > 120) return;
 
-            if (gameSession == null)
-            {
-                return;
-            }
+            _gameSessionSearchRetries++;
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
+
+            if (gameSession == null) return;
+
+            _gameSessionSearchRetries = 0;
         }
 
         UpdateHUD();

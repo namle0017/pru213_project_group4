@@ -142,3 +142,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinPickup
   coinValue: 1
+  coinPickupClip: {fileID: 8300000, guid: f94646ab46aef354ca6f8e5602b7ca81, type: 3}
+  pickupVolume: 1

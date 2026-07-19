@@ -30,12 +30,12 @@ public class GameOverPanel : MonoBehaviour
     {
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
         }
 
         if (startGame == null)
         {
-            startGame = FindFirstObjectByType<StartGame>();
+            startGame = FindAnyObjectByType<StartGame>(FindObjectsInactive.Exclude);
         }
     }
 
@@ -48,7 +48,7 @@ public class GameOverPanel : MonoBehaviour
 
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
             if (gameSession == null)
             {
                 return;
@@ -171,6 +171,7 @@ public class GameOverPanel : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
         Debug.Log("GameOverPanel: Restart scene " + currentSceneName);
 
+        AudioService.PlayButtonClick();
         Time.timeScale = 1f;
         SceneManager.LoadScene(currentSceneName);
     }
@@ -179,11 +180,12 @@ public class GameOverPanel : MonoBehaviour
     {
         if (startGame == null)
         {
-            startGame = FindFirstObjectByType<StartGame>();
+            startGame = FindAnyObjectByType<StartGame>(FindObjectsInactive.Exclude);
         }
 
         if (startGame != null)
         {
+            AudioService.PlayBackClose();
             startGame.LoadMainMenu();
             return;
         }

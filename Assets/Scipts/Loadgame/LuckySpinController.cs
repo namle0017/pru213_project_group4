@@ -3,14 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class LuckySpinController : MonoBehaviour
 {
-    private const string CoinRewardSpritePath = "Assets/Sprites/component/Everything/Icon_start.png";
-
     [Header("UI References")]
     [SerializeField] private RectTransform wheelTransform;
     [SerializeField] private Button spinButton;
@@ -31,6 +26,8 @@ public class LuckySpinController : MonoBehaviour
     [SerializeField] private float angleOffset = 0f;
     [SerializeField] private bool demoMode = true;
     [SerializeField] private Sprite coinRewardSprite;
+    [SerializeField] private float boosted20CoinWeightMultiplier = 1.8f;
+    [SerializeField] private float boosted50CoinWeightMultiplier = 1.6f;
 
     private const string MenuSceneName = "Menu";
     private const string F1VehicleId = "f1_car";
@@ -39,6 +36,7 @@ public class LuckySpinController : MonoBehaviour
 
     private bool isSpinning;
     private Sprite f1RewardSprite;
+    private AudioSource wheelTickSource;
 
     private readonly RewardSegment[] demoRewards =
     {
@@ -58,11 +56,15 @@ public class LuckySpinController : MonoBehaviour
     {
         AutoAssignReferences();
         PreserveSpinButtonVisualWhenDisabled();
-        TryAssignEditorSprites();
 
         if (resultRewardImage != null)
         {
             f1RewardSprite = resultRewardImage.sprite;
+        }
+
+        if (coinRewardSprite == null)
+        {
+            Debug.LogWarning("LuckySpinController: coinRewardSprite chua duoc gan. Reward coin se khong hien icon.");
         }
 
         if (resultPopupRoot != null)
@@ -72,6 +74,7 @@ public class LuckySpinController : MonoBehaviour
 
         BindButtons();
         RefreshCoinText();
+        EnsureWheelTickSource();
     }
 
     private void BindButtons()
@@ -165,7 +168,8 @@ public class LuckySpinController : MonoBehaviour
             return;
         }
 
-        StartSpinFlow();
+        AudioService.PlayButtonClick();
+        StartSpinFlow(false);
     }
 
     public void OnSpinAgainPressed()
@@ -177,10 +181,11 @@ public class LuckySpinController : MonoBehaviour
             return;
         }
 
-        StartSpinFlow();
+        AudioService.PlayButtonClick();
+        StartSpinFlow(true);
     }
 
-    private void StartSpinFlow()
+    private void StartSpinFlow(bool isSpinAgain)
     {
         if (SaveSystem.LoadTotalCoins() < spinCost)
         {
@@ -195,7 +200,8 @@ public class LuckySpinController : MonoBehaviour
         }
 
         RefreshCoinText();
-        RewardSegment reward = ChooseReward();
+        RewardSegment reward = ChooseReward(isSpinAgain);
+        AudioService.PlayClip(AudioPaths.SpinStart, 1f);
         StartCoroutine(SpinToRewardCoroutine(reward));
     }
 
@@ -204,6 +210,7 @@ public class LuckySpinController : MonoBehaviour
         isSpinning = true;
         SetSpinButtonInteractable(false);
         SetPopupButtonsInteractable(false);
+        PlayWheelTickLoop();
 
         float startAngle = GetCurrentWheelAngle();
         float targetAngle = CalculateTargetAngle(reward.segmentIndex);
@@ -222,13 +229,14 @@ public class LuckySpinController : MonoBehaviour
         }
 
         SetWheelAngle(startAngle + totalRotation);
+        StopWheelTickLoop();
         ApplyReward(reward);
 
         isSpinning = false;
         SetPopupButtonsInteractable(true);
     }
 
-    private RewardSegment ChooseReward()
+    private RewardSegment ChooseReward(bool isSpinAgain)
     {
         if (!demoMode)
         {
@@ -239,7 +247,7 @@ public class LuckySpinController : MonoBehaviour
         float totalWeight = 0f;
         for (int i = 0; i < demoRewards.Length; i++)
         {
-            totalWeight += demoRewards[i].weight;
+            totalWeight += GetEffectiveWeight(demoRewards[i]);
         }
 
         float randomPoint = Random.Range(0f, totalWeight);
@@ -247,7 +255,7 @@ public class LuckySpinController : MonoBehaviour
 
         for (int i = 0; i < demoRewards.Length; i++)
         {
-            cumulative += demoRewards[i].weight;
+            cumulative += GetEffectiveWeight(demoRewards[i]);
             if (randomPoint <= cumulative)
             {
                 return demoRewards[i];
@@ -257,6 +265,27 @@ public class LuckySpinController : MonoBehaviour
         return demoRewards[demoRewards.Length - 1];
     }
 
+    private float GetEffectiveWeight(RewardSegment reward)
+    {
+        float effectiveWeight = reward.weight;
+
+        if (reward.rewardType != RewardType.Coins)
+        {
+            return effectiveWeight;
+        }
+
+        if (reward.coinAmount == 20)
+        {
+            effectiveWeight *= Mathf.Max(1f, boosted20CoinWeightMultiplier);
+        }
+        else if (reward.coinAmount == 50)
+        {
+            effectiveWeight *= Mathf.Max(1f, boosted50CoinWeightMultiplier);
+        }
+
+        return effectiveWeight;
+    }
+
     private void ApplyReward(RewardSegment reward)
     {
         switch (reward.rewardType)
@@ -264,20 +293,22 @@ public class LuckySpinController : MonoBehaviour
             case RewardType.Coins:
                 SaveSystem.AddCoins(reward.coinAmount);
                 RefreshCoinText();
-                ShowResultPopup("YOU WON!", "+" + reward.coinAmount + " COINS", PopupRewardVisual.Coin);
-                break;
+        ShowResultPopup("YOU WON!", "+" + reward.coinAmount + " COINS", PopupRewardVisual.Coin, true);
+        break;
 
             case RewardType.F1Car:
                 if (!SaveSystem.IsVehicleUnlocked(F1VehicleId))
                 {
                     SaveSystem.SaveVehicleUnlocked(F1VehicleId, true);
-                    ShowResultPopup("JACKPOT!", "F1 CAR UNLOCKED!", PopupRewardVisual.F1);
+                    // Fixed: removed duplicate PlayUnlockSuccess() — jackpot sound is sufficient
+                    PlayJackpotSound();
+                    ShowResultPopup("JACKPOT!", "F1 CAR UNLOCKED!", PopupRewardVisual.F1, true);
                 }
                 else
                 {
                     SaveSystem.AddCoins(duplicateF1CoinReward);
                     RefreshCoinText();
-                    ShowResultPopup("DUPLICATE!", "F1 already unlocked! Converted to " + duplicateF1CoinReward + " coins", PopupRewardVisual.Coin);
+                    ShowResultPopup("DUPLICATE!", "F1 already unlocked! Converted to " + duplicateF1CoinReward + " coins", PopupRewardVisual.Coin, true);
                 }
                 break;
         }
@@ -285,10 +316,11 @@ public class LuckySpinController : MonoBehaviour
 
     private void ShowNotEnoughCoinsPopup()
     {
-        ShowResultPopup("NOT ENOUGH COINS", "You need " + spinCost + " coins to spin.", PopupRewardVisual.None);
+        AudioService.PlayErrorNotEnoughCoin();
+        ShowResultPopup("NOT ENOUGH COINS", "You need " + spinCost + " coins to spin.", PopupRewardVisual.None, false);
     }
 
-    private void ShowResultPopup(string title, string message, PopupRewardVisual rewardVisual)
+    private void ShowResultPopup(string title, string message, PopupRewardVisual rewardVisual, bool playPopupSound)
     {
         if (resultTitleText != null)
         {
@@ -327,6 +359,10 @@ public class LuckySpinController : MonoBehaviour
             resultPopupRoot.SetActive(true);
         }
 
+        if (playPopupSound)
+        {
+            AudioService.PlayRewardPopup();
+        }
         SetSpinButtonInteractable(false);
         SetPopupButtonsInteractable(true);
     }
@@ -354,6 +390,7 @@ public class LuckySpinController : MonoBehaviour
 
     public void GoHome()
     {
+        AudioService.PlayBackClose();
         SceneManager.LoadScene(MenuSceneName);
     }
 
@@ -402,14 +439,59 @@ public class LuckySpinController : MonoBehaviour
         spinButton.colors = colors;
     }
 
-    private void TryAssignEditorSprites()
+    private void PlayJackpotSound()
     {
-#if UNITY_EDITOR
-        if (coinRewardSprite == null)
+        AudioClip jackpotClip = AudioService.LoadClip(AudioPaths.JackpotUnlock);
+        if (jackpotClip == null)
         {
-            coinRewardSprite = AssetDatabase.LoadAssetAtPath<Sprite>(CoinRewardSpritePath);
+            return;
         }
-#endif
+
+        AudioService.PlayClip(jackpotClip, 1f);
+    }
+
+    private void EnsureWheelTickSource()
+    {
+        if (wheelTickSource != null)
+        {
+            return;
+        }
+
+        AudioClip tickClip = AudioService.LoadClip(AudioPaths.WheelTickLoop);
+        if (tickClip == null)
+        {
+            return;
+        }
+
+        wheelTickSource = gameObject.GetComponent<AudioSource>();
+        if (wheelTickSource == null)
+        {
+            wheelTickSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        wheelTickSource.playOnAwake = false;
+        wheelTickSource.loop = true;
+        wheelTickSource.spatialBlend = 0f;
+        wheelTickSource.volume = 0.8f;
+        wheelTickSource.clip = tickClip;
+    }
+
+    private void PlayWheelTickLoop()
+    {
+        EnsureWheelTickSource();
+
+        if (wheelTickSource != null && wheelTickSource.clip != null && !wheelTickSource.isPlaying)
+        {
+            wheelTickSource.Play();
+        }
+    }
+
+    private void StopWheelTickLoop()
+    {
+        if (wheelTickSource != null && wheelTickSource.isPlaying)
+        {
+            wheelTickSource.Stop();
+        }
     }
 
     private void SetPopupButtonsInteractable(bool value)

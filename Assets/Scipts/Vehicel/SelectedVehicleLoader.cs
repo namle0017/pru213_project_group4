@@ -43,22 +43,22 @@ public class SelectedVehicleLoader : MonoBehaviour
 
         if (gameSession == null)
         {
-            gameSession = FindFirstObjectByType<GameSession>();
+            gameSession = FindAnyObjectByType<GameSession>(FindObjectsInactive.Exclude);
         }
 
         if (infiniteTerrain == null)
         {
-            infiniteTerrain = FindFirstObjectByType<InfiniteTerrain>();
+            infiniteTerrain = FindAnyObjectByType<InfiniteTerrain>(FindObjectsInactive.Exclude);
         }
 
         if (pickupSpawnerRuntime == null)
         {
-            pickupSpawnerRuntime = FindFirstObjectByType<PickupSpawnerRuntime>();
+            pickupSpawnerRuntime = FindAnyObjectByType<PickupSpawnerRuntime>(FindObjectsInactive.Exclude);
         }
 
         if (playerCamera == null)
         {
-            playerCamera = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+            playerCamera = FindAnyObjectByType<Unity.Cinemachine.CinemachineCamera>(FindObjectsInactive.Exclude);
         }
     }
 

@@ -7,6 +7,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinText;
 
     private const string GarageSceneName = "GarageScene";
+    private const string DailyRewardSceneName = "DailyRewardScene";
 
     private void Start()
     {
@@ -33,6 +34,7 @@ public class MainMenuController : MonoBehaviour
 
     public void OnPlay()
     {
+        AudioService.PlayButtonClick();
         SceneManager.LoadScene("LevelSelect");
     }
 
@@ -43,21 +45,30 @@ public class MainMenuController : MonoBehaviour
 
     public void OpenGarage()
     {
+        AudioService.PlayButtonClick();
         SceneManager.LoadScene(GarageSceneName);
     }
 
     public void OnDaily()
     {
-        Debug.Log("Daily Reward coming soon");
+        OnDailyReward();
+    }
+
+    public void OnDailyReward()
+    {
+        AudioService.PlayButtonClick();
+        SceneManager.LoadScene(DailyRewardSceneName);
     }
 
     public void OnLuckySpin()
     {
+        AudioService.PlayButtonClick();
         SceneManager.LoadScene("SpinScene");
     }
 
     public void OnQuit()
     {
+        AudioService.PlayButtonClick();
         Debug.Log("Quit Game");
         Application.Quit();
     }
