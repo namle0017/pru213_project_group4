@@ -174,6 +174,6 @@ public static class SaveSystem
         {
             return 0; // Max level reached
         }
-        return 5500; // Giá cố định 5500 xu để khớp với ảnh nút bấm của bạn
+        return 500; // Giá nâng cấp thực tế chỉ là 500 xu (dù trên ảnh hiển thị 5500)
     }
 }
