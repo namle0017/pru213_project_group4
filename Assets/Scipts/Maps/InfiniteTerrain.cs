@@ -172,6 +172,9 @@ public class InfiniteTerrain : MonoBehaviour
         }
 
         BuildSpline(ssc, startX, _noiseOffset);
+        ssc.RefreshSpriteShape();
+        ssc.BakeCollider();
+
         _chunks.Enqueue(new ChunkInfo
         {
             chunkObject = go,
@@ -273,10 +276,15 @@ public class InfiniteTerrain : MonoBehaviour
         float lastX  = startX + (pointsPerChunk - 1) * xStep;
         float floorY = -Mathf.Abs(bottomDepth); // luôn âm
 
-        spline.InsertPointAt(pointsPerChunk,
-            new Vector3(lastX,  floorY, 0f));
-        spline.InsertPointAt(pointsPerChunk + 1,
-            new Vector3(startX, floorY, 0f));
+        spline.InsertPointAt(pointsPerChunk, new Vector3(lastX, floorY, 0f));
+        spline.SetTangentMode(pointsPerChunk, ShapeTangentMode.Linear);
+        spline.SetLeftTangent(pointsPerChunk, Vector3.zero);
+        spline.SetRightTangent(pointsPerChunk, Vector3.zero);
+
+        spline.InsertPointAt(pointsPerChunk + 1, new Vector3(startX, floorY, 0f));
+        spline.SetTangentMode(pointsPerChunk + 1, ShapeTangentMode.Linear);
+        spline.SetLeftTangent(pointsPerChunk + 1, Vector3.zero);
+        spline.SetRightTangent(pointsPerChunk + 1, Vector3.zero);
     }
 
     // ── Raycast ───────────────────────────────────────────────────────
