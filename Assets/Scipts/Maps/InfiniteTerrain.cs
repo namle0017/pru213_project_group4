@@ -189,10 +189,26 @@ public class InfiniteTerrain : MonoBehaviour
         try
         {
             BuildSpline(ssc, startX, chunkNoiseOffset);
+
+            // ── NGUYEN NHAN COC LOI: FRUSTUM CULLING ────────────────────────
+            // Chunk instantiate tai goc (0,0) nhung BuildSpline dat spline o world-X xa
+            // (vd 300..338). SpriteShapeController.InitBounds() tinh culling AABB =
+            // localBounds * m_BoundsScale (default 2). Bounds nho khong phu vi tri that
+            // -> Unity frustum-cull chunk -> OnWillRenderObject KHONG chay -> BakeMesh
+            // KHONG chay -> mesh khong doi ra vi tri that -> collider bake tu mesh cu ->
+            // KHONG co dat cho xe -> xe roi + raycast "khong tim thay terrain".
+            // GROUND chay duoc chi vi prefab set BoundsScale=256; MARS vi design spline
+            // dai 860m. Ep boundsScale lon tren MOI chunk de khong bao gio bi cull.
+            ssc.boundsScale = 10000f;
+
+            // Bake ngay lap tuc (khong doi frame render, vi neu bi cull se khong bao gio
+            // toi): mesh cap nhat bounds that + collider khop ngay -> khong roi 1 frame.
+            ssc.BakeMesh().Complete();
+            ssc.BakeCollider();
         }
         catch (System.Exception ex)
         {
-            Debug.LogError($"InfiniteTerrain[{gameObject.scene.name}]: BuildSpline loi tai chunk X={startX:F1} noiseOff={chunkNoiseOffset:F2} (prefab '{chunkPrefab.name}'): {ex}. Skip chunk.");
+            Debug.LogError($"InfiniteTerrain[{gameObject.scene.name}]: dung chunk X={startX:F1} noiseOff={chunkNoiseOffset:F2} (prefab '{chunkPrefab.name}'): {ex}. Skip chunk.");
             Destroy(go);
             return;
         }
