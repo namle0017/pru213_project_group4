@@ -38,10 +38,23 @@ public class VehicelControl : MonoBehaviour
     [SerializeField] private string _vehicleId = "basic_car";
 
     private float _tireTorqueMultiplier = 1f;
+    private PedalButton _gasButton;
+    private PedalButton _brakeButton;
 
     private void Start()
     {
         ApplyUpgrades();
+        FindPedals();
+    }
+
+    private void FindPedals()
+    {
+        PedalButton[] pedals = FindObjectsByType<PedalButton>(FindObjectsSortMode.None);
+        foreach (var pedal in pedals)
+        {
+            if (pedal.IsGasPedal) _gasButton = pedal;
+            else _brakeButton = pedal;
+        }
     }
 
     private void ApplyUpgrades()
@@ -71,22 +84,27 @@ public class VehicelControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current == null) return;
+        if (_gasButton == null || _brakeButton == null)
+        {
+            FindPedals();
+        }
 
-        // Nhấn nút mũi tên phải (hoặc phím D) để tiến lên
-        if (Keyboard.current.rightArrowKey.isPressed || Keyboard.current.dKey.isPressed)
+        bool keyboardGas = Keyboard.current != null && (Keyboard.current.rightArrowKey.isPressed || Keyboard.current.dKey.isPressed);
+        bool keyboardBrake = Keyboard.current != null && (Keyboard.current.leftArrowKey.isPressed || Keyboard.current.aKey.isPressed);
+
+        bool isGasPressed = keyboardGas || (_gasButton != null && _gasButton.IsPressed);
+        bool isBrakePressed = keyboardBrake || (_brakeButton != null && _brakeButton.IsPressed);
+
+        if (isGasPressed)
         {
             _moveInput = 1f;
             _isCoasting = false;
         }
-        // Nhấn nút mũi tên trái (hoặc phím A) để đi ngược lại (lùi)
-        else if (Keyboard.current.leftArrowKey.isPressed || Keyboard.current.aKey.isPressed)
+        else if (isBrakePressed)
         {
-
             _moveInput = -1f;
             _isCoasting = false;
         }
-        // Không nhấn phím nào -> Trôi tự nhiên
         else
         {
             _moveInput = 0f;
