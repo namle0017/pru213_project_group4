@@ -67,6 +67,9 @@ public class GameSession : MonoBehaviour
         currentFuel = maxFuel;
         CacheStartPosition();
         CachePlayerComponents();
+
+        // Tự động thêm component tính điểm biểu diễn trên không & bay cao
+        gameObject.AddComponent<AirFlipDetector>();
     }
 
     private void Update()
